@@ -16,13 +16,25 @@ interface Post {
 }
 
 export default async function BlogPage() {
-  const supabase = createServerClient()
-
-  // Obtener los posts del blog desde Supabase
-  const { data: posts, error } = await supabase.from("posts").select("*").order("created_at", { ascending: false })
+  let posts = [];
+  let error = null;
+  
+  try {
+    const supabase = createServerClient();
+    
+    if (supabase) {
+      // Obtener los posts del blog desde Supabase
+      const response = await supabase.from("posts").select("*").order("created_at", { ascending: false });
+      posts = response.data || [];
+      error = response.error;
+    }
+  } catch (err) {
+    console.error("Error al inicializar Supabase:", err);
+    error = err;
+  }
 
   if (error) {
-    console.error("Error al cargar los posts:", error)
+    console.error("Error al cargar los posts:", error);
   }
 
   return (

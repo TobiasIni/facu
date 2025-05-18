@@ -9,7 +9,7 @@ export default function Home() {
       {/* Hero Section */}
       <section className="py-12 md:py-20">
         <div className="text-center space-y-4">
-          <h1 className="text-4xl md:text-6xl font-bold">Nombre del Artista</h1>
+          <h1 className="text-4xl md:text-6xl font-bold">Facu Reino</h1>
           <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto">
             Comediante de StandUp con experiencia en shows nacionales e internacionales
           </p>
