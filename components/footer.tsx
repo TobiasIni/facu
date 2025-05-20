@@ -37,14 +37,11 @@ export default function Footer() {
           <div>
             <h3 className="text-lg font-bold mb-4">Sígueme</h3>
             <div className="flex space-x-4">
-              <Link href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+              <Link href="https://www.instagram.com/facureino/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
                 <Instagram className="h-6 w-6 hover:text-primary transition-colors" />
               </Link>
-              <Link href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+              <Link href="https://x.com/facureinooo" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
                 <Twitter className="h-6 w-6 hover:text-primary transition-colors" />
-              </Link>
-              <Link href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-                <Facebook className="h-6 w-6 hover:text-primary transition-colors" />
               </Link>
               <Link href="https://youtube.com" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
                 <Youtube className="h-6 w-6 hover:text-primary transition-colors" />

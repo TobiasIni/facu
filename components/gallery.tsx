@@ -9,37 +9,37 @@ import { Button } from "@/components/ui/button"
 const galleryImages = [
   {
     id: 1,
-    src: "/placeholder.svg?height=600&width=800",
+    src: "/logoFacu.jpg",
     alt: "Show en Teatro Nacional",
     title: "Show en Teatro Nacional",
   },
   {
     id: 2,
-    src: "/placeholder.svg?height=600&width=800",
+    src: "/logoFacu.jpg",
     alt: "Festival de Comedia 2023",
     title: "Festival de Comedia 2023",
   },
   {
     id: 3,
-    src: "/placeholder.svg?height=600&width=800",
+    src: "/logoFacu.jpg",
     alt: "Gira Internacional",
     title: "Gira Internacional",
   },
   {
     id: 4,
-    src: "/placeholder.svg?height=600&width=800",
+    src: "/logoFacu.jpg",
     alt: "Backstage",
     title: "Backstage",
   },
   {
     id: 5,
-    src: "/placeholder.svg?height=600&width=800",
+    src: "/logoFacu.jpg",
     alt: "Entrevista TV",
     title: "Entrevista TV",
   },
   {
     id: 6,
-    src: "/placeholder.svg?height=600&width=800",
+    src: "/logoFacu.jpg",
     alt: "Show Privado",
     title: "Show Privado",
   },
