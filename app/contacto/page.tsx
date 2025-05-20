@@ -9,6 +9,9 @@ import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { createClient } from "@/utils/supabase/client"
 import { Mail, Phone, MapPin, Instagram, Twitter, Facebook, Youtube } from "lucide-react"
+import { Resend } from 'resend'
+
+const resend = new Resend(process.env.NEXT_PUBLIC_RESEND_API_KEY)
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -36,6 +39,7 @@ export default function ContactPage() {
     try {
       const supabase = createClient()
 
+      // Insertar en la base de datos
       const { error } = await supabase.from("contactos").insert([
         {
           nombre: formData.name,
@@ -47,9 +51,24 @@ export default function ContactPage() {
 
       if (error) throw error
 
+      // Enviar email
+      await resend.emails.send({
+        from: 'Facu Reino Website <onboarding@resend.dev>',
+        to: 'initobias@gmail.com',
+        subject: `Nuevo mensaje de contacto: ${formData.subject}`,
+        html: `
+          <h2>Nuevo mensaje de contacto</h2>
+          <p><strong>Nombre:</strong> ${formData.name}</p>
+          <p><strong>Email:</strong> ${formData.email}</p>
+          <p><strong>Asunto:</strong> ${formData.subject}</p>
+          <p><strong>Mensaje:</strong></p>
+          <p>${formData.message}</p>
+        `,
+      })
+
       setSubmitStatus({
         success: true,
-        message: "¡Gracias por contactarme!.",
+        message: "¡Gracias por contactarme! Te responderé a la brevedad.",
       })
 
       // Limpiar el formulario
@@ -152,7 +171,7 @@ export default function ContactPage() {
           </div>
 
           <div className="mt-8">
-            <h3 className="text-xl font-medium mb-4">Seguime en redes sociales</h3>
+            <h3 className="text-xl font-medium mb-4">Seguíme en redes sociales</h3>
             <div className="flex space-x-4">
               <Button variant="outline" size="icon" asChild>
                 <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
