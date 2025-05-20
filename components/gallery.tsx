@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect, useCallback } from "react"
 import Image from "next/image"
 import { ChevronLeft, ChevronRight, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -9,37 +9,37 @@ import { Button } from "@/components/ui/button"
 const galleryImages = [
   {
     id: 1,
-    src: "/logoFacu.jpg",
-    alt: "Show en Teatro Nacional",
-    title: "Show en Teatro Nacional",
+    src: "/show1.jpg",
+    alt: "Show en Teatro Taburete",
+    title: "Show en Teatro Taburete",
   },
   {
     id: 2,
-    src: "/logoFacu.jpg",
+    src: "/show2.jpg",
     alt: "Festival de Comedia 2023",
     title: "Festival de Comedia 2023",
   },
   {
     id: 3,
-    src: "/logoFacu.jpg",
+    src: "/show3.jpg",
     alt: "Gira Internacional",
     title: "Gira Internacional",
   },
   {
     id: 4,
-    src: "/logoFacu.jpg",
+    src: "/show4.jpg",
     alt: "Backstage",
     title: "Backstage",
   },
   {
     id: 5,
-    src: "/logoFacu.jpg",
+    src: "/show5.jpg",
     alt: "Entrevista TV",
     title: "Entrevista TV",
   },
   {
     id: 6,
-    src: "/logoFacu.jpg",
+    src: "/show6.jpg",
     alt: "Show Privado",
     title: "Show Privado",
   },
@@ -56,17 +56,32 @@ export default function Gallery() {
     setCurrentImage(null)
   }
 
-  const goToPrevious = () => {
+  const goToPrevious = useCallback(() => {
     if (currentImage !== null) {
-      setCurrentImage((currentImage - 1 + galleryImages.length) % galleryImages.length)
+      setCurrentImage((prevImage) => prevImage === null ? 0 : (prevImage - 1 + galleryImages.length) % galleryImages.length)
     }
-  }
+  }, [currentImage])
 
-  const goToNext = () => {
+  const goToNext = useCallback(() => {
     if (currentImage !== null) {
-      setCurrentImage((currentImage + 1) % galleryImages.length)
+      setCurrentImage((prevImage) => prevImage === null ? 0 : (prevImage + 1) % galleryImages.length)
     }
-  }
+  }, [currentImage])
+
+  // Desplazamiento automático
+  useEffect(() => {
+    let interval: NodeJS.Timeout | null = null
+    if (currentImage !== null) {
+      interval = setInterval(() => {
+        goToNext()
+      }, 3000); // Cambia de imagen cada 3 segundos (ajusta este valor si quieres)
+    }
+    return () => {
+      if (interval) {
+        clearInterval(interval)
+      }
+    }
+  }, [currentImage, goToNext])
 
   return (
     <div>

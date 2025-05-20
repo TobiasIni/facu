@@ -11,11 +11,11 @@ export default function Home() {
         <div className="text-center space-y-4">
           <h1 className="text-4xl md:text-6xl font-bold">Facu Reino</h1>
           <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto">
-            Comediante de StandUp homosexual,chupavergas,gay,gay gay gay
+            Que te cuesta ser feliz pelele
           </p>
           <div className="pt-4">
             <Button asChild size="lg">
-              <Link href="/contacto">Contáctame</Link>
+              <Link href="/contacto">Contactame</Link>
             </Button>
           </div>
         </div>
@@ -23,7 +23,7 @@ export default function Home() {
 
       {/* Gallery Section */}
       <section className="py-12" id="galeria">
-        <h2 className="text-3xl font-bold mb-8 text-center">Galería</h2>
+        <h2 className="text-3xl font-bold mb-8 text-center">Mis shows</h2>
         <Gallery />
       </section>
 
