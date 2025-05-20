@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react"
 import Image from "next/image"
-import { ChevronLeft, ChevronRight, X } from "lucide-react"
+import { ChevronLeft, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 // Datos de ejemplo para la galería
@@ -46,92 +46,76 @@ const galleryImages = [
 ]
 
 export default function Gallery() {
-  const [currentImage, setCurrentImage] = useState<number | null>(null)
-
-  const openLightbox = (index: number) => {
-    setCurrentImage(index)
-  }
-
-  const closeLightbox = () => {
-    setCurrentImage(null)
-  }
+  const [currentImage, setCurrentImage] = useState(0)
 
   const goToPrevious = useCallback(() => {
-    if (currentImage !== null) {
-      setCurrentImage((prevImage) => prevImage === null ? 0 : (prevImage - 1 + galleryImages.length) % galleryImages.length)
-    }
-  }, [currentImage])
+    setCurrentImage((prevImage) => (prevImage - 1 + galleryImages.length) % galleryImages.length)
+  }, [])
 
   const goToNext = useCallback(() => {
-    if (currentImage !== null) {
-      setCurrentImage((prevImage) => prevImage === null ? 0 : (prevImage + 1) % galleryImages.length)
-    }
-  }, [currentImage])
+    setCurrentImage((prevImage) => (prevImage + 1) % galleryImages.length)
+  }, [])
 
   // Desplazamiento automático
   useEffect(() => {
-    let interval: NodeJS.Timeout | null = null
-    if (currentImage !== null) {
-      interval = setInterval(() => {
-        goToNext()
-      }, 3000); // Cambia de imagen cada 3 segundos (ajusta este valor si quieres)
-    }
-    return () => {
-      if (interval) {
-        clearInterval(interval)
-      }
-    }
-  }, [currentImage, goToNext])
+    const interval = setInterval(() => {
+      goToNext()
+    }, 5000) // Cambia de imagen cada 5 segundos
+
+    return () => clearInterval(interval)
+  }, [goToNext])
 
   return (
-    <div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {galleryImages.map((image, index) => (
-          <div
-            key={image.id}
-            className="relative aspect-square overflow-hidden rounded-lg cursor-pointer group"
-            onClick={() => openLightbox(index)}
-          >
-            <Image
-              src={image.src || "/placeholder.svg"}
-              alt={image.alt}
-              fill
-              className="object-cover transition-transform duration-300 group-hover:scale-105"
-            />
-            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
-              <div className="p-4 text-white">
-                <h3 className="font-medium">{image.title}</h3>
-              </div>
+    <div className="w-3/4 mx-auto">
+      <div className="relative w-full h-[70vh] overflow-hidden">
+        {/* Imagen actual */}
+        <div className="relative w-full h-full">
+          <Image
+            src={galleryImages[currentImage].src}
+            alt={galleryImages[currentImage].alt}
+            fill
+            className="object-cover"
+            priority
+          />
+          <div className="absolute inset-0 bg-black/30 flex items-end">
+            <div className="w-full p-8 text-white">
+              <h3 className="text-2xl font-bold">{galleryImages[currentImage].title}</h3>
             </div>
           </div>
-        ))}
-      </div>
-
-      {/* Lightbox */}
-      {currentImage !== null && (
-        <div className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center">
-          <Button variant="ghost" size="icon" className="absolute top-4 right-4 text-white" onClick={closeLightbox}>
-            <X className="h-6 w-6" />
-          </Button>
-
-          <Button variant="ghost" size="icon" className="absolute left-4 text-white" onClick={goToPrevious}>
-            <ChevronLeft className="h-8 w-8" />
-          </Button>
-
-          <div className="relative h-[80vh] w-[80vw]">
-            <Image
-              src={galleryImages[currentImage].src || "/placeholder.svg"}
-              alt={galleryImages[currentImage].alt}
-              fill
-              className="object-contain"
-            />
-          </div>
-
-          <Button variant="ghost" size="icon" className="absolute right-4 text-white" onClick={goToNext}>
-            <ChevronRight className="h-8 w-8" />
-          </Button>
         </div>
-      )}
+
+        {/* Botones de navegación */}
+        <Button
+          variant="ghost"
+          size="icon"
+          className="absolute left-4 top-1/2 -translate-y-1/2 text-white hover:bg-white/20"
+          onClick={goToPrevious}
+        >
+          <ChevronLeft className="h-8 w-8" />
+        </Button>
+
+        <Button
+          variant="ghost"
+          size="icon"
+          className="absolute right-4 top-1/2 -translate-y-1/2 text-white hover:bg-white/20"
+          onClick={goToNext}
+        >
+          <ChevronRight className="h-8 w-8" />
+        </Button>
+
+        {/* Indicadores de posición */}
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+          {galleryImages.map((_, index) => (
+            <button
+              key={index}
+              className={`w-2 h-2 rounded-full transition-all ${
+                index === currentImage ? "bg-white w-4" : "bg-white/50"
+              }`}
+              onClick={() => setCurrentImage(index)}
+            />
+          ))}
+        </div>
+      </div>
     </div>
   )
 }

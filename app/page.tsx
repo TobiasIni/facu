@@ -24,7 +24,7 @@ export default function Home() {
       {/* Gallery Section */}
       <section className="py-12 bg-[#000000] -mx-4" id="galeria">
         <div className="container mx-auto">
-          <h2 className="text-3xl font-bold mb-8 text-center">Mis shows</h2>
+          <img src="/BannerShows.png" alt="Facureino" className="w-3/4 mx-auto mb-4" />
           <Gallery />
         </div>
       </section>

@@ -12,10 +12,6 @@ export async function POST(request: Request) {
     const body = await request.json();
     const { name, email, subject, message } = body;
 
-    if (!resend) {
-      throw new Error('Resend client not initialized');
-    }
-
     const { data, error } = await resend.emails.send({
       from: 'Facu Reino Website <onboarding@resend.dev>',
       to: ['initobias@gmail.com'],
