@@ -49,7 +49,7 @@ export default function ContactPage() {
 
       setSubmitStatus({
         success: true,
-        message: "¡Mensaje enviado correctamente! Te contactaremos pronto.",
+        message: "¡Gracias por contactarme!.",
       })
 
       // Limpiar el formulario
@@ -76,7 +76,7 @@ export default function ContactPage() {
 
       <div className="grid md:grid-cols-2 gap-12 max-w-4xl mx-auto">
         <div>
-          <h2 className="text-2xl font-semibold mb-6">Envíame un mensaje</h2>
+          <h2 className="text-2xl font-semibold mb-6">Envíame un correo</h2>
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
@@ -128,7 +128,7 @@ export default function ContactPage() {
               <Mail className="h-6 w-6 mr-4 mt-1" />
               <div>
                 <h3 className="font-medium">Email</h3>
-                <p className="text-muted-foreground">contacto@artistastandup.com</p>
+                <p className="text-muted-foreground">Facureinocontact@gmail.com</p>
               </div>
             </div>
 
@@ -136,7 +136,7 @@ export default function ContactPage() {
               <Phone className="h-6 w-6 mr-4 mt-1" />
               <div>
                 <h3 className="font-medium">Teléfono</h3>
-                <p className="text-muted-foreground">+34 123 456 789</p>
+                <p className="text-muted-foreground">+54 9 11 3385-8879</p>
               </div>
             </div>
 
@@ -145,18 +145,14 @@ export default function ContactPage() {
               <div>
                 <h3 className="font-medium">Representante</h3>
                 <p className="text-muted-foreground">
-                  Agencia de Talentos Cómicos
-                  <br />
-                  Calle Gran Vía 123
-                  <br />
-                  28001 Madrid, España
+                  Tobias Ini
                 </p>
               </div>
             </div>
           </div>
 
           <div className="mt-8">
-            <h3 className="text-xl font-medium mb-4">Sígueme en redes sociales</h3>
+            <h3 className="text-xl font-medium mb-4">Seguime en redes sociales</h3>
             <div className="flex space-x-4">
               <Button variant="outline" size="icon" asChild>
                 <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
