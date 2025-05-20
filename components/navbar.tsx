@@ -30,13 +30,13 @@ export default function Navbar() {
         {/* Desktop navigation */}
         <nav className="hidden md:flex items-center gap-6">
         <div className="flex items-center gap-6">
-          <Link href="/#calendario" className="text-sm font-medium transition-colors hover:text-primary">
+          <Link href="/#calendario" className="text-sm font-large transition-colors hover:text-primary">
             Calendario
           </Link>
-          <Link href="/blog" className="text-sm font-medium transition-colors hover:text-primary">
+          <Link href="/blog" className="text-sm font-large transition-colors hover:text-primary">
             Blog
           </Link>
-          <Link href="/contacto" className="text-sm font-medium transition-colors hover:text-primary">
+          <Link href="/contacto" className="text-sm font-large transition-colors hover:text-primary">
             Contacto
           </Link>
           </div>
