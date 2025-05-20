@@ -3,18 +3,17 @@
 import { useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { Instagram, Menu, Twitter, X, Youtube } from "lucide-react"
-import { ModeToggle } from "./mode-toggle"
+import { Instagram, Menu, X, Youtube } from "lucide-react"
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 w-full border-b bg-[#ff9bf3] backdrop-blur supports-[backdrop-filter]:bg-[#ff9bf3]/60">
       <div className="container flex h-20 items-center justify-between">
         {/* Logo + Title */}
         <Link href="/" className="flex items-center gap-2">
-          <Image src="/logoFacu.jpg" alt="Facureino" width={84} height={70} />
+          <Image src="/logoFacu.jpg" alt="Facureino" width={84} height={65} />
           <span className="font-bold text-2xl">Facu reino</span>
         </Link>
 
@@ -51,7 +50,6 @@ export default function Navbar() {
                 <Youtube className="h-7 w-7 hover:text-primary transition-colors" />
               </Link>
             </div>
-          <ModeToggle />
         </nav>
 
         {/* Mobile navigation */}
@@ -79,9 +77,6 @@ export default function Navbar() {
               >
                 Contacto
               </Link>
-              <div className="p-2">
-                <ModeToggle />
-              </div>
             </div>
           </div>
         )}

@@ -22,13 +22,15 @@ export default function Home() {
       </section>
 
       {/* Gallery Section */}
-      <section className="py-12" id="galeria">
-        <h2 className="text-3xl font-bold mb-8 text-center">Mis shows</h2>
-        <Gallery />
+      <section className="py-12 bg-[#000000] -mx-4" id="galeria">
+        <div className="container mx-auto">
+          <h2 className="text-3xl font-bold mb-8 text-center">Mis shows</h2>
+          <Gallery />
+        </div>
       </section>
 
       {/* Calendar Section */}
-      <section className="py-12" id="calendario">
+      <section className="py-12 bg-[#000000] -mx-4" id="calendario">
         <h2 className="text-3xl font-bold mb-8 text-center">Próximos Shows</h2>
         <CalendarSection />
       </section>

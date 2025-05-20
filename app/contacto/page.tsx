@@ -9,9 +9,6 @@ import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { createClient } from "@/utils/supabase/client"
 import { Mail, Phone, MapPin, Instagram, Twitter, Facebook, Youtube } from "lucide-react"
-import { Resend } from 'resend'
-
-const resend = new Resend(process.env.NEXT_PUBLIC_RESEND_API_KEY)
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -39,32 +36,50 @@ export default function ContactPage() {
     try {
       const supabase = createClient()
 
+      // Verificar que las variables de entorno estén configuradas
+      if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+        throw new Error("Configuración de Supabase incompleta")
+      }
+
       // Insertar en la base de datos
-      const { error } = await supabase.from("contactos").insert([
-        {
-          nombre: formData.name,
-          email: formData.email,
-          asunto: formData.subject,
-          mensaje: formData.message,
+      const { data, error: dbError } = await supabase
+        .from("contactos")
+        .insert([
+          {
+            nombre: formData.name,
+            email: formData.email,
+            asunto: formData.subject,
+            mensaje: formData.message,
+          },
+        ])
+        .select()
+        .single()
+
+      if (dbError) {
+        console.error("Error de base de datos:", dbError)
+        if (dbError.code === 'PGRST301') {
+          throw new Error("Error de conexión con la base de datos. Por favor, verifica tu conexión a internet.")
+        }
+        throw new Error(dbError.message || "Error al guardar en la base de datos")
+      }
+
+      if (!data) {
+        throw new Error("No se pudo guardar el mensaje")
+      }
+
+      // Enviar email usando la API route
+      const emailResponse = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
         },
-      ])
+        body: JSON.stringify(formData),
+      });
 
-      if (error) throw error
-
-      // Enviar email
-      await resend.emails.send({
-        from: 'Facu Reino Website <onboarding@resend.dev>',
-        to: 'initobias@gmail.com',
-        subject: `Nuevo mensaje de contacto: ${formData.subject}`,
-        html: `
-          <h2>Nuevo mensaje de contacto</h2>
-          <p><strong>Nombre:</strong> ${formData.name}</p>
-          <p><strong>Email:</strong> ${formData.email}</p>
-          <p><strong>Asunto:</strong> ${formData.subject}</p>
-          <p><strong>Mensaje:</strong></p>
-          <p>${formData.message}</p>
-        `,
-      })
+      if (!emailResponse.ok) {
+        const errorData = await emailResponse.json();
+        throw new Error(errorData.error || 'Error al enviar el email');
+      }
 
       setSubmitStatus({
         success: true,
@@ -79,10 +94,10 @@ export default function ContactPage() {
         message: "",
       })
     } catch (error) {
-      console.error("Error al enviar el formulario:", error)
+      console.error("Error al procesar el formulario:", error)
       setSubmitStatus({
         success: false,
-        message: "Hubo un error al enviar tu mensaje. Por favor, intenta nuevamente.",
+        message: error instanceof Error ? error.message : "Hubo un error al enviar tu mensaje. Por favor, intenta nuevamente.",
       })
     } finally {
       setIsSubmitting(false)
