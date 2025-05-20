@@ -15,7 +15,7 @@ export default function Navbar() {
         {/* Logo + Title */}
         <Link href="/" className="flex items-center gap-2">
           <Image src="/logoFacu.jpg" alt="Facureino" width={70} height={100} />
-          <span className="font-bold text-xl">Facu reino</span>
+          <span className="font-bold text-xl">Facureino</span>
         </Link>
 
         {/* Mobile menu button */}
