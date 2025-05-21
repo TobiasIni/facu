@@ -9,20 +9,20 @@ const videoData = [
   {
     id: 1,
     title: "Camara Oculta Beso",
-    thumbnail: "/tiktok3.png",
-    videoId: "7493667845079977222",
+    thumbnail: "/tiktoklogo.png",
+    videoId: "7328424776668679429",
   },
   {
     id: 2,
-    title: "Festival de Comedia 2023",
-    thumbnail: "/show2.jpg",
-    videoId: "7493667845079977222",
+    title: "Fail Gimnasio",
+    thumbnail: "/tiktoklogo.png",
+    videoId: "7503684316237516087",
   },
   {
     id: 3,
-    title: "Gira Internacional",
-    thumbnail: "/show3.jpg",
-    videoId: "7493667845079977222",
+    title: "Milipili Backstage",
+    thumbnail: "/tiktoklogo.png",
+    videoId: "7505202432725503287",
   },
 ]
 

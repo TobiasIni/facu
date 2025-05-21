@@ -10,12 +10,9 @@ export default function Home() {
       {/* Hero Section */}
       <section className="py-12 md:py-20">
         <div className="text-center space-y-4">
-          <h1 className="text-4xl md:text-6xl font-bold">Facu Reino</h1>
-          <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto">
-            Que te cuesta ser feliz pelele
-          </p>
+          <img src="/LogoFacu2.0.jpeg" alt="Facureino" className="w-2/4 mx-auto mb-4 rounded-full" />
           <div className="pt-4">
-            <Button asChild size="lg">
+            <Button asChild size="lg" className="bg-pink-400 hover:bg-pink-500 text-white">
               <Link href="/contacto">Contactame</Link>
             </Button>
           </div>
@@ -25,7 +22,7 @@ export default function Home() {
       {/* Gallery Section */}
       <section className="py-12 bg-[#000000] -mx-4" id="galeria">
         <div className="container mx-auto">
-          <img src="/BannerShows.png" alt="Facureino" className="w-3/4 mx-auto mb-4" />
+          <img src="/BannerShows.png" alt="Facureino" className="w-3/4 mx-auto mb-4 rounded-full" />
           <Gallery />
         </div>
       </section>
