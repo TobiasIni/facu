@@ -1,54 +1,74 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Calendar } from "@/components/ui/calendar"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { MapPin, CalendarIcon, Clock } from "lucide-react"
+import { createClient } from "@/utils/supabase/client"
 
-// Datos de ejemplo para los eventos
-const events = [
-  {
-    id: 1,
-    title: "Show en Teatro Nacional",
-    date: new Date(2025, 4, 20), // 20 de Mayo de 2025
-    time: "20:00",
-    location: "Teatro Nacional, Madrid",
-    tickets: "https://example.com/tickets/1",
-    sold_out: false,
-  },
-  {
-    id: 2,
-    title: "Festival de Comedia",
-    date: new Date(2025, 4, 25), // 25 de Mayo de 2025
-    time: "19:30",
-    location: "Auditorio Municipal, Barcelona",
-    tickets: "https://example.com/tickets/2",
-    sold_out: false,
-  },
-  {
-    id: 3,
-    title: "Show Especial",
-    date: new Date(2025, 5, 5), // 5 de Junio de 2025
-    time: "21:00",
-    location: "Club de Comedia, Valencia",
-    tickets: "https://example.com/tickets/3",
-    sold_out: true,
-  },
-  {
-    id: 4,
-    title: "Gira Internacional",
-    date: new Date(2025, 5, 15), // 15 de Junio de 2025
-    time: "20:30",
-    location: "Teatro Metropólitan, Ciudad de México",
-    tickets: "https://example.com/tickets/4",
-    sold_out: false,
-  },
-]
+interface Event {
+  id: number
+  title: string
+  date: Date
+  time: string
+  location: string
+  tickets_url: string | null
+  sold_out: boolean
+}
+
+interface EventFromDB {
+  id: number
+  title: string
+  date: string
+  time: string
+  location: string
+  tickets_url: string | null
+  sold_out: boolean
+}
 
 export default function CalendarSection() {
   const [date, setDate] = useState<Date | undefined>(new Date())
+  const [events, setEvents] = useState<Event[]>([])
+  const [loading, setLoading] = useState(true)
+  const supabase = createClient()
+
+  useEffect(() => {
+    fetchEvents()
+  }, [])
+
+  const fetchEvents = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('eventos')
+        .select('*')
+        .order('date', { ascending: true })
+
+      if (error) {
+        console.error('Error fetching events:', error)
+        return
+      }
+
+      if (data) {
+        // Convertir las fechas de string a Date
+        const formattedEvents: Event[] = data.map((event: any) => ({
+          id: event.id,
+          title: event.title,
+          date: new Date(event.date),
+          time: event.time,
+          location: event.location,
+          tickets_url: event.tickets_url,
+          sold_out: event.sold_out
+        }))
+        setEvents(formattedEvents)
+      }
+    } catch (error) {
+      console.error('Error:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
 
   // Función para obtener los eventos del día seleccionado
   const getEventsForDate = (selectedDate: Date | undefined) => {
@@ -73,6 +93,10 @@ export default function CalendarSection() {
   }
 
   const selectedDateEvents = getEventsForDate(date)
+
+  if (loading) {
+    return <div className="text-center p-8">Cargando eventos...</div>
+  }
 
   return (
     <div className="grid md:grid-cols-2 gap-8">
@@ -124,9 +148,9 @@ export default function CalendarSection() {
                       <MapPin className="mr-2 h-4 w-4" />
                       {event.location}
                     </div>
-                    {!event.sold_out && (
+                    {!event.sold_out && event.tickets_url && (
                       <Button className="mt-2 w-full" asChild>
-                        <a href={event.tickets} target="_blank" rel="noopener noreferrer">
+                        <a href={event.tickets_url} target="_blank" rel="noopener noreferrer">
                           Comprar Entradas
                         </a>
                       </Button>

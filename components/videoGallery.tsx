@@ -9,19 +9,19 @@ const videoData = [
   {
     id: 1,
     title: "Camara Oculta Beso",
-    thumbnail: "/tiktoklogo.png",
+    thumbnail: "/tiktokLogo.png",
     videoId: "7328424776668679429",
   },
   {
     id: 2,
     title: "Fail Gimnasio",
-    thumbnail: "/tiktoklogo.png",
+    thumbnail: "/tiktokLogo.png",
     videoId: "7503684316237516087",
   },
   {
     id: 3,
     title: "Milipili Backstage",
-    thumbnail: "/tiktoklogo.png",
+    thumbnail: "/tiktokLogo.png",
     videoId: "7505202432725503287",
   },
 ]

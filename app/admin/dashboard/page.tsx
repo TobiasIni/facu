@@ -8,6 +8,22 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { PlusCircle, Calendar, FileText, Users, LogOut, Settings } from "lucide-react"
 import Link from "next/link"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog"
+
+interface Post {
+  id: number
+  title: string
+  created_at: string
+}
 
 export default function AdminDashboard() {
   const [user, setUser] = useState<any>(null)
@@ -17,6 +33,9 @@ export default function AdminDashboard() {
     events: 0,
     messages: 0,
   })
+  const [posts, setPosts] = useState<Post[]>([])
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
+  const [postToDelete, setPostToDelete] = useState<number | null>(null)
   const router = useRouter()
   const supabase = createClient()
 
@@ -34,8 +53,9 @@ export default function AdminDashboard() {
       setUser(session.user)
       setLoading(false)
 
-      // Cargar estadísticas
+      // Cargar estadísticas y posts
       await loadStats()
+      await loadPosts()
     }
 
     checkUser()
@@ -59,6 +79,46 @@ export default function AdminDashboard() {
       })
     } catch (error) {
       console.error("Error al cargar estadísticas:", error)
+    }
+  }
+
+  const loadPosts = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("posts")
+        .select("*")
+        .order("created_at", { ascending: false })
+
+      if (error) throw error
+      const typedData = data?.map(post => ({
+        id: post.id as number,
+        title: post.title as string,
+        created_at: post.created_at as string
+      })) || []
+      setPosts(typedData)
+    } catch (error) {
+      console.error("Error al cargar posts:", error)
+    }
+  }
+
+  const handleDeletePost = async () => {
+    if (!postToDelete) return
+
+    try {
+      const { error } = await supabase
+        .from("posts")
+        .delete()
+        .eq("id", postToDelete)
+
+      if (error) throw error
+
+      // Actualizar la lista de posts y estadísticas
+      await loadPosts()
+      await loadStats()
+      setDeleteDialogOpen(false)
+      setPostToDelete(null)
+    } catch (error) {
+      console.error("Error al eliminar el post:", error)
     }
   }
 
@@ -153,7 +213,7 @@ export default function AdminDashboard() {
               </div>
             </CardHeader>
             <CardContent>
-              {stats.posts === 0 ? (
+              {posts.length === 0 ? (
                 <div className="text-center p-12 border rounded-lg bg-muted/50">
                   <h3 className="text-lg font-medium mb-2">No hay posts disponibles</h3>
                   <p className="text-muted-foreground mb-4">Comienza a crear contenido para tu blog</p>
@@ -166,21 +226,38 @@ export default function AdminDashboard() {
                 </div>
               ) : (
                 <div className="border rounded-lg divide-y">
-                  <div className="p-4 flex justify-between items-center">
-                    <div>
-                      <h3 className="font-medium">Mi primer show de StandUp</h3>
-                      <p className="text-sm text-muted-foreground">Publicado el 15 de mayo de 2025</p>
+                  {posts.map((post) => (
+                    <div key={post.id} className="p-4 flex justify-between items-center">
+                      <div>
+                        <h3 className="font-medium">{post.title}</h3>
+                        <p className="text-sm text-muted-foreground">
+                          Publicado el {new Date(post.created_at).toLocaleDateString("es-ES", {
+                            day: "numeric",
+                            month: "long",
+                            year: "numeric",
+                          })}
+                        </p>
+                      </div>
+                      <div className="flex gap-2">
+                        <Button variant="outline" size="sm" asChild>
+                          <Link href={`/admin/dashboard/editar-post/${post.id}`}>
+                            Editar
+                          </Link>
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="text-red-500"
+                          onClick={() => {
+                            setPostToDelete(post.id)
+                            setDeleteDialogOpen(true)
+                          }}
+                        >
+                          Eliminar
+                        </Button>
+                      </div>
                     </div>
-                    <div className="flex gap-2">
-                      <Button variant="outline" size="sm">
-                        Editar
-                      </Button>
-                      <Button variant="outline" size="sm" className="text-red-500">
-                        Eliminar
-                      </Button>
-                    </div>
-                  </div>
-                  {/* Más posts aquí */}
+                  ))}
                 </div>
               )}
             </CardContent>
@@ -270,6 +347,23 @@ export default function AdminDashboard() {
           </Card>
         </TabsContent>
       </Tabs>
+
+      <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>¿Estás seguro?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Esta acción no se puede deshacer. Se eliminará permanentemente el post.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancelar</AlertDialogCancel>
+            <AlertDialogAction onClick={handleDeletePost} className="bg-red-500 hover:bg-red-600">
+              Eliminar
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   )
 }

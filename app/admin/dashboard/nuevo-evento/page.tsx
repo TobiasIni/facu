@@ -43,21 +43,41 @@ export default function NuevoEventoPage() {
     setSuccess(false)
 
     try {
+      // Validar que los campos requeridos no estén vacíos
+      if (!formData.title || !formData.date || !formData.time || !formData.location) {
+        throw new Error("Por favor completa todos los campos requeridos")
+      }
+
       // Formatear la fecha y hora para la base de datos
       const dateTime = new Date(`${formData.date}T${formData.time}`)
+      
+      // Verificar que la fecha sea válida
+      if (isNaN(dateTime.getTime())) {
+        throw new Error("La fecha o hora ingresada no es válida")
+      }
 
-      const { error } = await supabase.from("eventos").insert([
-        {
-          title: formData.title,
-          date: dateTime.toISOString(),
-          time: formData.time,
-          location: formData.location,
-          tickets_url: formData.tickets_url,
-          sold_out: formData.sold_out,
-        },
-      ])
+      const { data, error: supabaseError } = await supabase
+        .from("eventos")
+        .insert([
+          {
+            title: formData.title,
+            date: dateTime.toISOString(),
+            time: formData.time,
+            location: formData.location,
+            tickets_url: formData.tickets_url || null,
+            sold_out: formData.sold_out,
+          },
+        ])
+        .select()
 
-      if (error) throw error
+      if (supabaseError) {
+        console.error("Error de Supabase:", supabaseError)
+        throw new Error(supabaseError.message)
+      }
+
+      if (!data) {
+        throw new Error("No se pudo crear el evento")
+      }
 
       setSuccess(true)
       // Limpiar el formulario
@@ -76,6 +96,7 @@ export default function NuevoEventoPage() {
         router.refresh()
       }, 2000)
     } catch (error: any) {
+      console.error("Error completo:", error)
       setError(error.message || "Error al crear el evento")
     } finally {
       setLoading(false)
@@ -103,29 +124,65 @@ export default function NuevoEventoPage() {
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
               <Label htmlFor="title">Título del evento</Label>
-              <Input id="title" name="title" value={formData.title} onChange={handleChange} required />
+              <Input 
+                id="title" 
+                name="title" 
+                value={formData.title} 
+                onChange={handleChange} 
+                required 
+                disabled={loading}
+              />
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="date">Fecha</Label>
-                <Input id="date" name="date" type="date" value={formData.date} onChange={handleChange} required />
+                <Input 
+                  id="date" 
+                  name="date" 
+                  type="date" 
+                  value={formData.date} 
+                  onChange={handleChange} 
+                  required 
+                  disabled={loading}
+                />
               </div>
 
               <div className="space-y-2">
                 <Label htmlFor="time">Hora</Label>
-                <Input id="time" name="time" type="time" value={formData.time} onChange={handleChange} required />
+                <Input 
+                  id="time" 
+                  name="time" 
+                  type="time" 
+                  value={formData.time} 
+                  onChange={handleChange} 
+                  required 
+                  disabled={loading}
+                />
               </div>
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="location">Ubicación</Label>
-              <Input id="location" name="location" value={formData.location} onChange={handleChange} required />
+              <Input 
+                id="location" 
+                name="location" 
+                value={formData.location} 
+                onChange={handleChange} 
+                required 
+                disabled={loading}
+              />
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="tickets_url">URL para comprar entradas</Label>
-              <Input id="tickets_url" name="tickets_url" value={formData.tickets_url} onChange={handleChange} />
+              <Input 
+                id="tickets_url" 
+                name="tickets_url" 
+                value={formData.tickets_url} 
+                onChange={handleChange} 
+                disabled={loading}
+              />
             </div>
 
             <div className="flex items-center space-x-2">
@@ -134,6 +191,7 @@ export default function NuevoEventoPage() {
                 name="sold_out"
                 checked={formData.sold_out}
                 onCheckedChange={(checked) => setFormData((prev) => ({ ...prev, sold_out: checked === true }))}
+                disabled={loading}
               />
               <Label htmlFor="sold_out">Entradas agotadas</Label>
             </div>
