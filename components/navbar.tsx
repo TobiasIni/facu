@@ -13,7 +13,7 @@ export default function Navbar() {
     <header className="sticky top-0 z-50 w-full border-b border-gray-800 bg-black/95 backdrop-blur supports-[backdrop-filter]:bg-black/60">
       <div className="container flex h-20 items-center justify-between">
         <Link href="/" className="flex items-center space-x-2">
-          <Image src="/logoFacu.jpg" alt="Facureino" width={84} height={70} />
+          <Image src="/LogoFacu2.0.jpeg" alt="Facureino" width={80} height={70} className="rounded-full" />
         </Link>
 
         <nav className="flex items-center space-x-8 text-sm font-medium">

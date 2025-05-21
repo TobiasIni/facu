@@ -10,7 +10,16 @@ const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
   title: "Facu Reino",
-  description: "Comediante y Actor",
+  description: "Comediante y creador de contenido",
+  icons: {
+    icon: [
+      {
+        url: '/LogoFacu2.0.jpeg',
+        type: 'image/jpeg',
+        sizes: 'any'
+      }
+    ]
+  }
 }
 
 export default function RootLayout({
