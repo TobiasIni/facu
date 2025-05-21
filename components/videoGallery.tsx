@@ -8,8 +8,8 @@ import { motion } from "framer-motion"
 const videoData = [
   {
     id: 1,
-    title: "Show en Teatro Taburete",
-    thumbnail: "/show1.jpg",
+    title: "Camara Oculta Beso",
+    thumbnail: "/tiktok3.png",
     videoId: "7493667845079977222",
   },
   {
