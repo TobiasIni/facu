@@ -14,7 +14,6 @@ export default function Navbar() {
       <div className="container flex h-20 items-center justify-between">
         <Link href="/" className="flex items-center space-x-2">
           <Image src="/logoFacu.jpg" alt="Facureino" width={84} height={70} />
-          <span className="font-bold text-white">Facu Reino</span>
         </Link>
 
         <nav className="flex items-center space-x-8 text-sm font-medium">
@@ -22,7 +21,7 @@ export default function Navbar() {
             href="/"
             className={cn(
               "transition-colors hover:text-white",
-              pathname === "/" ? "text-white" : "text-gray-400"
+              pathname === "/" ? "text-pink-700" : "text-pink-400"
             )}
           >
             Inicio
@@ -31,7 +30,7 @@ export default function Navbar() {
             href="/blog"
             className={cn(
               "transition-colors hover:text-white",
-              pathname === "/blog" ? "text-white" : "text-gray-400"
+              pathname === "/blog" ? "text-pink-700" : "text-pink-400"
             )}
           >
             Blog
@@ -40,7 +39,7 @@ export default function Navbar() {
             href="/contacto"
             className={cn(
               "transition-colors hover:text-white",
-              pathname === "/contacto" ? "text-white" : "text-gray-400"
+              pathname === "/contacto" ? "text-pink-700" : "text-pink-400"
             )}
           >
             Contacto
@@ -52,7 +51,7 @@ export default function Navbar() {
             href="https://www.instagram.com/facureino/"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-gray-400 hover:text-white transition-colors"
+            className="text-pink-400 hover:text-white transition-colors"
           >
             <Instagram className="h-6 w-6" />
           </Link>
@@ -60,7 +59,7 @@ export default function Navbar() {
             href="https://x.com/facureinooo"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-gray-400 hover:text-white transition-colors"
+            className="text-pink-400 hover:text-white transition-colors"
           >
             <Twitter className="h-6 w-6" />
           </Link>
@@ -68,7 +67,7 @@ export default function Navbar() {
             href="https://youtube.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-gray-400 hover:text-white transition-colors"
+            className="text-pink-400 hover:text-white transition-colors"
           >
             <Youtube className="h-6 w-6" />
           </Link>

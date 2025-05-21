@@ -1,4 +1,5 @@
 import Gallery from "@/components/gallery"
+import VideoGallery from "@/components/videoGallery"
 import CalendarSection from "@/components/calendar-section"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
@@ -26,6 +27,12 @@ export default function Home() {
         <div className="container mx-auto">
           <img src="/BannerShows.png" alt="Facureino" className="w-3/4 mx-auto mb-4" />
           <Gallery />
+        </div>
+      </section>
+
+      <section className="py-12 bg-[#000000] -mx-4" id="videoGallery">
+        <div className="container mx-auto">
+          <VideoGallery />
         </div>
       </section>
 

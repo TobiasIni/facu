@@ -106,7 +106,6 @@ export default function ContactPage() {
 
   return (
     <div className="container mx-auto px-4 py-12">
-      <h1 className="text-4xl font-bold text-center mb-8">Contacto</h1>
 
       <div className="grid md:grid-cols-2 gap-12 max-w-4xl mx-auto">
         <div>
@@ -189,23 +188,18 @@ export default function ContactPage() {
             <h3 className="text-xl font-medium mb-4">Seguíme en redes sociales</h3>
             <div className="flex space-x-4">
               <Button variant="outline" size="icon" asChild>
-                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-                  <Instagram className="h-5 w-5" />
+                <a href="https://www.instagram.com/facureino/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                  <Instagram className="text-pink-400 hover:text-white transition-colors h-5 w-5" />
                 </a>
               </Button>
               <Button variant="outline" size="icon" asChild>
-                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
-                  <Twitter className="h-5 w-5" />
+                <a href="https://x.com/facureinooo" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+                  <Twitter className="text-pink-400 hover:text-white transition-colors h-5 w-5" />
                 </a>
               </Button>
               <Button variant="outline" size="icon" asChild>
-                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-                  <Facebook className="h-5 w-5" />
-                </a>
-              </Button>
-              <Button variant="outline" size="icon" asChild>
-                <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
-                  <Youtube className="h-5 w-5" />
+                <a href="https://facebook.com/facundoreinoso" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                  <Facebook className="text-pink-400 hover:text-white transition-colors h-5 w-5" />
                 </a>
               </Button>
             </div>

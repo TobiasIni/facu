@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react"
 import Image from "next/image"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { motion } from "framer-motion"
 
 // Datos de ejemplo para la galería
 const galleryImages = [
@@ -66,8 +67,14 @@ export default function Gallery() {
   }, [goToNext])
 
   return (
-    <div className="w-3/4 mx-auto">
-      <div className="relative w-full h-[70vh] overflow-hidden">
+    <motion.div 
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+      className="w-3/4 mx-auto"
+    >
+      <div className="relative w-full h-[70vh] overflow-hidden rounded-lg border-4 border-pink-400/30 shadow-[0_0_15px_rgba(236,72,153,0.3)]">
         {/* Imagen actual */}
         <div className="relative w-full h-full">
           <Image
@@ -116,6 +123,6 @@ export default function Gallery() {
           ))}
         </div>
       </div>
-    </div>
+    </motion.div>
   )
 }
