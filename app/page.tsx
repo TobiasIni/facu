@@ -1,43 +1,73 @@
+"use client"
+
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
 import Gallery from "@/components/gallery"
 import VideoGallery from "@/components/videoGallery"
 import CalendarSection from "@/components/calendar-section"
-import { Button } from "@/components/ui/button"
-import Link from "next/link"
+import { motion } from "framer-motion"
 
 export default function Home() {
   return (
     <div className="container mx-auto px-4 py-8">
       {/* Hero Section */}
-      <section className="py-12 md:py-20">
+      <motion.section 
+        className="py-12 md:py-20"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+      >
         <div className="text-center space-y-4">
-          <img src="/LogoFacu2.0.jpeg" alt="Facureino" className="w-2/4 mx-auto mb-4 rounded-full" />
-          <div className="pt-4">
+          <motion.img 
+            src="/LogoFacu2.0.jpeg" 
+            alt="Facureino" 
+            className="w-2/4 mx-auto mb-4 rounded-full"
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          />
+          <motion.div 
+            className="pt-4"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          >
             <Button asChild size="lg" className="bg-pink-400 hover:bg-pink-500 text-white">
               <Link href="/contacto">Contactame</Link>
             </Button>
-          </div>
+          </motion.div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Gallery Section */}
-      <section className="py-12 bg-[#000000] -mx-4" id="galeria">
-        <div className="container mx-auto">
-          <img src="/BannerShows.png" alt="Facureino" className="w-3/4 mx-auto mb-4 rounded-full" />
-          <Gallery />
-        </div>
-      </section>
+      <motion.section
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        viewport={{ once: true }}
+      >
+        <Gallery />
+      </motion.section>
 
-      <section className="py-12 bg-[#000000] -mx-4" id="videoGallery">
-        <div className="container mx-auto">
-          <VideoGallery />
-        </div>
-      </section>
+      {/* Video Gallery Section */}
+      <motion.section
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        viewport={{ once: true }}
+      >
+        <VideoGallery />
+      </motion.section>
 
       {/* Calendar Section */}
-      <section className="py-12 bg-[#000000] -mx-4" id="calendario">
-        <h2 className="text-3xl font-bold mb-8 text-center">Próximos Shows</h2>
+      <motion.section
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        viewport={{ once: true }}
+      >
         <CalendarSection />
-      </section>
+      </motion.section>
     </div>
   )
 }
