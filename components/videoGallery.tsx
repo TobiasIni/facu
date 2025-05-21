@@ -48,7 +48,7 @@ export default function VideoGallery() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      className="w-3/4 mx-auto"
+      className="w-4/4 mx-auto"
     >
       <Script src="https://www.tiktok.com/embed.js" strategy="lazyOnload" />
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -60,14 +60,25 @@ export default function VideoGallery() {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: index * 0.2 }}
             className="relative rounded-lg border-4 border-pink-400/30 shadow-[0_0_15px_rgba(236,72,153,0.3)] overflow-hidden"
-            style={{ aspectRatio: '9/16', marginTop: '-10px' }}
+            style={{ 
+              aspectRatio: '9/16', 
+              marginTop: '-10px',
+              width: '100%',
+              maxWidth: '400px',
+              margin: '0 auto'
+            }}
           >
             {activeVideo === video.id ? (
               <blockquote
                 className="tiktok-embed"
                 cite={`https://www.tiktok.com/@facureino/video/7328424776668679429`}
                 data-video-id={video.videoId}
-                style={{ maxWidth: '100%', minWidth: '100%', height: '100%' }}
+                style={{ 
+                  maxWidth: '100%', 
+                  minWidth: '100%', 
+                  height: '100%',
+                  margin: '0'
+                }}
               >
                 <section>
                   <a
