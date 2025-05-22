@@ -121,13 +121,13 @@ export default function VideoGallery() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      className="w-full mx-auto"
+      className="w-full mx-auto mt-16"
     >
       <Script src="https://www.tiktok.com/embed.js" strategy="lazyOnload" />
       
       {/* Mobile Carousel */}
       <div className="md:hidden relative">
-        <div className="overflow-hidden">
+        <div className="overflow-hidden rounded-lg border-4 border-pink-400/30 shadow-[0_0_15px_rgba(236,72,153,0.3)]">
           <AnimatePresence mode="wait">
             {renderVideoCard(videoData[currentIndex], 0)}
           </AnimatePresence>
@@ -159,7 +159,11 @@ export default function VideoGallery() {
 
       {/* Desktop Grid */}
       <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-6">
-        {videoData.map((video, index) => renderVideoCard(video, index))}
+        {videoData.map((video, index) => (
+          <div key={video.id} className="rounded-lg border-4 border-pink-400/30 shadow-[0_0_15px_rgba(236,72,153,0.3)]">
+            {renderVideoCard(video, index)}
+          </div>
+        ))}
       </div>
     </motion.div>
   )
