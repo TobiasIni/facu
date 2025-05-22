@@ -51,63 +51,61 @@ export default function VideoGallery() {
       className="w-4/4 mx-auto"
     >
       <Script src="https://www.tiktok.com/embed.js" strategy="lazyOnload" />
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-6">
         {videoData.map((video, index) => (
           <motion.div
             key={video.id}
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: index * 0.1 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: index * 0.2 }}
-            className="relative rounded-lg border-4 border-pink-400/30 shadow-[0_0_15px_rgba(236,72,153,0.3)] overflow-hidden"
-            style={{ 
-              aspectRatio: '9/16', 
-              marginTop: '-10px',
-              width: '100%',
-              maxWidth: '400px',
-              margin: '0 auto'
-            }}
+            className="flex flex-col items-center"
           >
-            {activeVideo === video.id ? (
-              <blockquote
-                className="tiktok-embed"
-                cite={`https://www.tiktok.com/@facureino/video/7328424776668679429`}
-                data-video-id={video.videoId}
-                style={{ 
-                  maxWidth: '100%', 
-                  minWidth: '100%', 
-                  height: '100%',
-                  margin: '0'
-                }}
-              >
-                <section>
-                  <a
-                    target="_blank"
-                    title="@facureino"
-                    href="https://www.tiktok.com/@facureino?refer=embed"
+            <div
+              className="relative w-full max-w-[400px] mx-auto cursor-pointer"
+              style={{ aspectRatio: "9/16" }}
+              onClick={() => setActiveVideo(video.id)}
+            >
+              {activeVideo === video.id ? (
+                <div className="w-full h-full">
+                  <blockquote
+                    className="tiktok-embed w-full h-full"
+                    cite={`https://www.tiktok.com/@facureino/video/7328424776668679429`}
+                    data-video-id={video.videoId}
                   >
-                    @facureino
-                  </a>
-                </section>
-              </blockquote>
-            ) : (
-              <div
-                className="relative w-full h-full cursor-pointer group"
-                onClick={() => setActiveVideo(video.id)}
-              >
-                <img
-                  src={video.thumbnail}
-                  alt={video.title}
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                  <Play className="w-16 h-16 text-white" />
+                    <section>
+                      <a
+                        target="_blank"
+                        title="@facureino"
+                        href="https://www.tiktok.com/@facureino?refer=embed"
+                      >
+                        @facureino
+                      </a>
+                    </section>
+                  </blockquote>
                 </div>
-                <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
-                  <h3 className="text-white font-bold">{video.title}</h3>
+              ) : (
+                <div className="relative w-full h-full">
+                  <img
+                    src={video.thumbnail}
+                    alt={video.title}
+                    className="w-full h-full object-cover rounded-lg"
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="w-16 h-16 bg-pink-500 rounded-full flex items-center justify-center">
+                      <svg
+                        className="w-8 h-8 text-white"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M8 5v14l11-7z" />
+                      </svg>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
+            <h3 className="mt-4 text-lg font-medium text-center">{video.title}</h3>
           </motion.div>
         ))}
       </div>
