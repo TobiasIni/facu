@@ -1,26 +1,16 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { Play } from "lucide-react"
-import Script from "next/script"
-import { motion, AnimatePresence } from "framer-motion" // Importa AnimatePresence
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card" // Importa componentes de Card de shadcn/ui
-
-// Declaración de tipos para tiktokEmbed
-declare global {
-  interface Window {
-    tiktokEmbed?: {
-      reload: () => void;
-    };
-  }
-}
+import { motion, AnimatePresence } from "framer-motion"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 
 interface Video {
   id: number
   title: string
-  thumbnail: string // Puede ser una URL a una imagen de preview
-  videoId: string // ID del video de TikTok
-  authorHandle: string // Handle del creador de TikTok, e.g., "@facureino"
+  thumbnail: string
+  videoId: string
+  authorHandle: string
 }
 
 // Datos de ejemplo para los videos
@@ -50,28 +40,6 @@ const videoData: Video[] = [
 
 export default function VideoGallery() {
   const [activeVideoId, setActiveVideoId] = useState<string | null>(null)
-  const [isScriptLoaded, setIsScriptLoaded] = useState(false)
-
-  useEffect(() => {
-    // Solo cargar el script una vez
-    if (typeof window !== 'undefined' && !window.tiktokEmbed) {
-      const script = document.createElement('script')
-      script.src = 'https://www.tiktok.com/embed.js'
-      script.async = true
-      script.onload = () => {
-        setIsScriptLoaded(true)
-        // Forzar la recarga de los embeds después de un pequeño delay
-        setTimeout(() => {
-          if (window.tiktokEmbed) {
-            window.tiktokEmbed.reload()
-          }
-        }, 100)
-      }
-      document.body.appendChild(script)
-    } else {
-      setIsScriptLoaded(true)
-    }
-  }, [])
 
   // Función para renderizar el bloque de video de TikTok
   const renderTikTokEmbed = (videoId: string, authorHandle: string) => {
@@ -79,8 +47,20 @@ export default function VideoGallery() {
       <iframe
         src={`https://www.tiktok.com/embed/v2/${videoId}`}
         className="w-full h-full"
+        style={{ 
+          width: '100%',
+          height: '100%',
+          border: 'none',
+          overflow: 'hidden',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0
+        }}
         allowFullScreen
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        scrolling="no"
       />
     )
   }
@@ -106,10 +86,10 @@ export default function VideoGallery() {
             viewport={{ once: true, amount: 0.1 }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
           >
-            <Card className="group relative overflow-hidden rounded-xl shadow-lg border border-primary/20 transform transition-all duration-300 hover:shadow-2xl hover:scale-[1.02] hover:border-primary/40">
+            <Card className="group relative overflow-hidden rounded-xl shadow-lg border border-primary/20 transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1 bg-gradient-to-r from-primary/5 to-accent/5 hover:from-primary/10 hover:to-accent/10">
               <CardHeader className="p-0">
                 <div
-                  className="relative w-full overflow-hidden cursor-pointer bg-gradient-to-br from-pink-400 to-purple-500"
+                  className="relative w-full overflow-hidden cursor-pointer bg-gradient-to-br from-pink-400 to-purple-500 transition-all duration-300"
                   style={{ aspectRatio: "9/16" }}
                   onClick={() => setActiveVideoId(activeVideoId === video.videoId ? null : video.videoId)}
                 >
