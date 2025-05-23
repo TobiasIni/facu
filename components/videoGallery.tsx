@@ -1,170 +1,172 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
-import { Play, ChevronLeft, ChevronRight } from "lucide-react"
+import { useState, useEffect } from "react"
+import { Play } from "lucide-react"
 import Script from "next/script"
-import { motion, AnimatePresence } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion" // Importa AnimatePresence
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card" // Importa componentes de Card de shadcn/ui
 
-const videoData = [
+// Declaración de tipos para tiktokEmbed
+declare global {
+  interface Window {
+    tiktokEmbed?: {
+      reload: () => void;
+    };
+  }
+}
+
+interface Video {
+  id: number
+  title: string
+  thumbnail: string // Puede ser una URL a una imagen de preview
+  videoId: string // ID del video de TikTok
+  authorHandle: string // Handle del creador de TikTok, e.g., "@facureino"
+}
+
+// Datos de ejemplo para los videos
+const videoData: Video[] = [
   {
     id: 1,
-    title: "Camara Oculta Beso",
-    thumbnail: "/tiktokLogo.png",
-    videoId: "7328424776668679429",
+    title: "Cámara Oculta Beso",
+    thumbnail: "tiktokLogo.png",
+    videoId: "7437319683134524728",
+    authorHandle: "facureino",
   },
   {
     id: 2,
-    title: "Fail Gimnasio",
-    thumbnail: "/tiktokLogo.png",
+    title: "Fail en el Gimnasio",
+    thumbnail: "tiktokLogo.png",
     videoId: "7503684316237516087",
+    authorHandle: "facureino",
   },
   {
     id: 3,
     title: "Milipili Backstage",
-    thumbnail: "/tiktokLogo.png",
+    thumbnail: "tiktokLogo.png",
     videoId: "7505202432725503287",
+    authorHandle: "facureino",
   },
 ]
 
 export default function VideoGallery() {
-  const [activeVideo, setActiveVideo] = useState<number | null>(null)
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const carouselRef = useRef<HTMLDivElement>(null)
+  const [activeVideoId, setActiveVideoId] = useState<string | null>(null)
+  const [isScriptLoaded, setIsScriptLoaded] = useState(false)
 
   useEffect(() => {
-    if (activeVideo !== null) {
+    // Solo cargar el script una vez
+    if (typeof window !== 'undefined' && !window.tiktokEmbed) {
       const script = document.createElement('script')
       script.src = 'https://www.tiktok.com/embed.js'
       script.async = true
-      document.body.appendChild(script)
-      return () => {
-        document.body.removeChild(script)
+      script.onload = () => {
+        setIsScriptLoaded(true)
+        // Forzar la recarga de los embeds después de un pequeño delay
+        setTimeout(() => {
+          if (window.tiktokEmbed) {
+            window.tiktokEmbed.reload()
+          }
+        }, 100)
       }
+      document.body.appendChild(script)
+    } else {
+      setIsScriptLoaded(true)
     }
-  }, [activeVideo])
+  }, [])
 
-  const nextSlide = () => {
-    setCurrentIndex((prev) => (prev + 1) % videoData.length)
+  // Función para renderizar el bloque de video de TikTok
+  const renderTikTokEmbed = (videoId: string, authorHandle: string) => {
+    return (
+      <iframe
+        src={`https://www.tiktok.com/embed/v2/${videoId}`}
+        className="w-full h-full"
+        allowFullScreen
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      />
+    )
   }
-
-  const prevSlide = () => {
-    setCurrentIndex((prev) => (prev - 1 + videoData.length) % videoData.length)
-  }
-
-  const renderVideoCard = (video: typeof videoData[0], index: number) => (
-    <motion.div
-      key={video.id}
-      initial={{ opacity: 0, scale: 0.8, rotateY: -90 }}
-      animate={{ 
-        opacity: 1, 
-        scale: 1, 
-        rotateY: 0,
-        x: `${(index - currentIndex) * 100}%`
-      }}
-      exit={{ opacity: 0, scale: 0.8, rotateY: 90 }}
-      transition={{ duration: 0.5 }}
-      className="flex-shrink-0 w-full md:w-auto"
-    >
-      <div className="flex flex-col items-center">
-        <div
-          className="relative w-full max-w-[400px] mx-auto cursor-pointer"
-          style={{ aspectRatio: "9/16" }}
-          onClick={() => setActiveVideo(video.id)}
-        >
-          {activeVideo === video.id ? (
-            <div className="w-full h-full">
-              <blockquote
-                className="tiktok-embed w-full h-full"
-                cite={`https://www.tiktok.com/@facureino/video/${video.videoId}`}
-                data-video-id={video.videoId}
-              >
-                <section>
-                  <a
-                    target="_blank"
-                    title="@facureino"
-                    href="https://www.tiktok.com/@facureino?refer=embed"
-                  >
-                    @facureino
-                  </a>
-                </section>
-              </blockquote>
-            </div>
-          ) : (
-            <div className="relative w-full h-full">
-              <img
-                src={video.thumbnail}
-                alt={video.title}
-                className="w-full h-full object-cover rounded-lg"
-              />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-16 h-16 bg-pink-500 rounded-full flex items-center justify-center">
-                  <svg
-                    className="w-8 h-8 text-white"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M8 5v14l11-7z" />
-                  </svg>
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
-        <h3 className="mt-4 text-lg font-medium text-center">{video.title}</h3>
-      </div>
-    </motion.div>
-  )
 
   return (
-    <motion.div 
+    <motion.section
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
+      viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      className="w-full mx-auto mt-16"
+      className="container mx-auto py-16 px-4"
     >
-      <Script src="https://www.tiktok.com/embed.js" strategy="lazyOnload" />
-      
-      {/* Mobile Carousel */}
-      <div className="md:hidden relative">
-        <div className="overflow-hidden rounded-lg border-4 border-pink-400/30 shadow-[0_0_15px_rgba(236,72,153,0.3)]">
-          <AnimatePresence mode="wait">
-            {renderVideoCard(videoData[currentIndex], 0)}
-          </AnimatePresence>
-        </div>
-        <button
-          onClick={prevSlide}
-          className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 p-2 rounded-full text-white hover:bg-black/70"
-        >
-          <ChevronLeft className="w-6 h-6" />
-        </button>
-        <button
-          onClick={nextSlide}
-          className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 p-2 rounded-full text-white hover:bg-black/70"
-        >
-          <ChevronRight className="w-6 h-6" />
-        </button>
-        <div className="flex justify-center gap-2 mt-4">
-          {videoData.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentIndex(index)}
-              className={`w-2 h-2 rounded-full ${
-                index === currentIndex ? 'bg-pink-500' : 'bg-gray-300'
-              }`}
-            />
-          ))}
-        </div>
-      </div>
+      <h2 className="text-4xl md:text-5xl font-extrabold text-center mb-12 bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-purple-600 drop-shadow-lg">
+        Mis Videos en TikTok
+      </h2>
 
-      {/* Desktop Grid */}
-      <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {videoData.map((video, index) => (
-          <div key={video.id} className="rounded-lg border-4 border-pink-400/30 shadow-[0_0_15px_rgba(236,72,153,0.3)]">
-            {renderVideoCard(video, index)}
-          </div>
+          <motion.div
+            key={video.id}
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true, amount: 0.1 }}
+            transition={{ duration: 0.5, delay: index * 0.1 }}
+          >
+            <Card className="group relative overflow-hidden rounded-xl shadow-lg border border-primary/20 transform transition-all duration-300 hover:shadow-2xl hover:scale-[1.02] hover:border-primary/40">
+              <CardHeader className="p-0">
+                <div
+                  className="relative w-full overflow-hidden cursor-pointer bg-gradient-to-br from-pink-400 to-purple-500"
+                  style={{ aspectRatio: "9/16" }}
+                  onClick={() => setActiveVideoId(activeVideoId === video.videoId ? null : video.videoId)}
+                >
+                  <AnimatePresence mode="wait">
+                    {activeVideoId === video.videoId ? (
+                      <motion.div
+                        key="tiktok-embed-player"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="absolute inset-0 flex items-center justify-center bg-black"
+                        style={{ width: '100%', height: '100%' }}
+                      >
+                        {renderTikTokEmbed(video.videoId, video.authorHandle)}
+                      </motion.div>
+                    ) : (
+                      <motion.div
+                        key="thumbnail-preview"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="absolute inset-0 flex items-center justify-center"
+                      >
+                        <img
+                          src={video.thumbnail}
+                          alt={video.title}
+                          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                        />
+                        <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
+                          <motion.div
+                            initial={{ scale: 0.8, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            transition={{ delay: 0.1, type: "spring", stiffness: 200 }}
+                            className="w-20 h-20 bg-white/30 backdrop-blur-sm rounded-full flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300 shadow-xl"
+                          >
+                            <Play className="w-10 h-10 text-white fill-current translate-x-0.5" />
+                          </motion.div>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              </CardHeader>
+              <CardContent className="p-4 text-center">
+                <CardTitle className="text-xl font-bold text-foreground mb-1 line-clamp-1">
+                  {video.title}
+                </CardTitle>
+                <CardDescription className="text-sm text-muted-foreground">
+                  Por <span className="font-semibold text-primary">@{video.authorHandle}</span>
+                </CardDescription>
+              </CardContent>
+            </Card>
+          </motion.div>
         ))}
       </div>
-    </motion.div>
+    </motion.section>
   )
-} 
+}

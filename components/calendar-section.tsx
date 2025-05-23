@@ -5,8 +5,9 @@ import { Calendar } from "@/components/ui/calendar"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { MapPin, CalendarIcon, Clock } from "lucide-react"
+import { MapPin, CalendarIcon, Clock, ArrowRight } from "lucide-react" // Se agrega ArrowRight para el botón
 import { createClient } from "@/utils/supabase/client"
+import { AnimatePresence, motion } from "framer-motion" // Para animaciones
 
 interface Event {
   id: number
@@ -30,6 +31,7 @@ interface EventFromDB {
 
 export default function CalendarSection() {
   const [date, setDate] = useState<Date | undefined>(new Date())
+  const [currentMonth, setCurrentMonth] = useState<Date>(new Date())
   const [events, setEvents] = useState<Event[]>([])
   const [loading, setLoading] = useState(true)
   const supabase = createClient()
@@ -51,7 +53,6 @@ export default function CalendarSection() {
       }
 
       if (data) {
-        // Convertir las fechas de string a Date
         const formattedEvents: Event[] = data.map((event: any) => ({
           id: event.id,
           title: event.title,
@@ -70,7 +71,6 @@ export default function CalendarSection() {
     }
   }
 
-  // Función para obtener los eventos del día seleccionado
   const getEventsForDate = (selectedDate: Date | undefined) => {
     if (!selectedDate) return []
 
@@ -82,7 +82,6 @@ export default function CalendarSection() {
     )
   }
 
-  // Función para resaltar fechas con eventos en el calendario
   const isDayWithEvent = (day: Date) => {
     return events.some(
       (event) =>
@@ -95,76 +94,189 @@ export default function CalendarSection() {
   const selectedDateEvents = getEventsForDate(date)
 
   if (loading) {
-    return <div className="text-center p-8">Cargando eventos...</div>
+    return (
+      <div className="flex justify-center items-center h-64">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+        <p className="ml-4 text-lg text-muted-foreground">Cargando eventos...</p>
+      </div>
+    )
   }
 
   return (
-    <div className="grid md:grid-cols-2 gap-8">
-      <div>
-        <Calendar
-          mode="single"
-          selected={date}
-          onSelect={setDate}
-          className="rounded-md border shadow"
-          modifiers={{
-            event: isDayWithEvent,
-          }}
-          modifiersClassNames={{
-            event: "bg-primary/20 font-bold text-primary",
-          }}
-        />
-      </div>
+    <div className="flex flex-col lg:flex-row gap-12 p-4 md:p-8 bg-background rounded-xl shadow-lg">
+      {/* Calendario */}
+      <motion.div
+        initial={{ opacity: 0, x: -50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.5 }}
+        className="flex-1 min-w-[300px]"
+      >
+        <Card className="overflow-hidden shadow-2xl rounded-xl">
+          <CardHeader className="bg-gradient-to-r from-primary to-primary/80 text-primary-foreground p-4">
+            <CardTitle className="text-xl font-bold flex items-center">
+              <CalendarIcon className="mr-2 h-6 w-6" /> Calendario de Eventos
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="p-2">
+            <Calendar
+              mode="single"
+              selected={date}
+              onSelect={setDate}
+              month={currentMonth}
+              onMonthChange={setCurrentMonth}
+              className="w-full [&_.rdp-day_with_event]:relative [&_.rdp-day_with_event]:after:absolute [&_.rdp-day_with_event]:after:bottom-1 [&_.rdp-day_with_event]:after:left-1/2 [&_.rdp-day_with_event]:after:-translate-x-1/2 [&_.rdp-day_with_event]:after:h-1.5 [&_.rdp-day_with_event]:after:w-1.5 [&_.rdp-day_with_event]:after:rounded-full [&_.rdp-day_with_event]:after:bg-primary"
+              classNames={{
+                month: "space-y-4 p-4",
+                caption_label: "hidden",
+                nav: "flex items-center justify-between",
+                nav_button: "h-8 w-8 p-0 opacity-70 hover:opacity-100 transition-opacity rounded-full bg-accent hover:bg-accent-foreground/10",
+                nav_button_previous: "absolute left-2",
+                nav_button_next: "absolute right-2",
+                head_row: "flex justify-around mt-4",
+                head_cell: "text-muted-foreground rounded-md w-9 font-normal text-[0.8rem]",
+                row: "flex w-full mt-2 justify-around",
+                cell: "h-9 w-9 text-center text-sm p-0 relative [&:has([aria-selected].day-range-end)]:rounded-r-md [&:has([aria-selected].day-range-start)]:rounded-l-md [&:has([aria-selected])]:bg-accent first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
+                day: "h-9 w-9 p-0 font-normal aria-selected:opacity-100 transition-all duration-200",
+                day_selected: "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground",
+                day_today: "bg-accent text-accent-foreground",
+                day_outside: "text-muted-foreground opacity-50",
+                day_disabled: "text-muted-foreground opacity-50",
+                day_range_middle: "aria-selected:bg-accent aria-selected:text-accent-foreground",
+                day_hidden: "invisible"
+              }}
+              modifiers={{
+                day_with_event: isDayWithEvent,
+              }}
+              components={{
+                Caption: ({ displayMonth }) => (
+                  <div className="flex justify-center pt-1 relative items-center">
+                    <Button
+                      variant="ghost"
+                      onClick={() => {
+                        const newMonth = new Date(currentMonth)
+                        newMonth.setMonth(newMonth.getMonth() - 1)
+                        setCurrentMonth(newMonth)
+                      }}
+                      className="absolute left-2 h-8 w-8 p-0 opacity-70 hover:opacity-100"
+                    >
+                      &lt;
+                    </Button>
+                    <h2 className="text-lg font-semibold text-foreground">
+                      {displayMonth.toLocaleDateString("es-ES", {
+                        month: "long",
+                        year: "numeric",
+                      })}
+                    </h2>
+                    <Button
+                      variant="ghost"
+                      onClick={() => {
+                        const newMonth = new Date(currentMonth)
+                        newMonth.setMonth(newMonth.getMonth() + 1)
+                        setCurrentMonth(newMonth)
+                      }}
+                      className="absolute right-2 h-8 w-8 p-0 opacity-70 hover:opacity-100"
+                    >
+                      &gt;
+                    </Button>
+                  </div>
+                ),
+              }}
+            />
+          </CardContent>
+        </Card>
+      </motion.div>
 
-      <div className="space-y-4">
-        <h3 className="text-xl font-medium">
+      {/* Lista de Eventos */}
+      <div className="flex-1 min-w-[300px]">
+        <h3 className="text-2xl font-extrabold text-foreground mb-6 border-b pb-2">
+          <span className="text-primary">Eventos para </span>
           {date ? (
-            <>Eventos para {date.toLocaleDateString("es-ES", { day: "numeric", month: "long", year: "numeric" })}</>
+            <span className="text-muted-foreground">
+              {date.toLocaleDateString("es-ES", { weekday: 'long', day: "numeric", month: "long", year: "numeric" })}
+            </span>
           ) : (
             "Selecciona una fecha"
           )}
         </h3>
 
-        {selectedDateEvents.length > 0 ? (
-          <div className="space-y-4">
-            {selectedDateEvents.map((event) => (
-              <Card key={event.id}>
-                <CardHeader className="pb-2">
-                  <div className="flex justify-between items-start">
-                    <CardTitle>{event.title}</CardTitle>
-                    {event.sold_out ? <Badge variant="destructive">Agotado</Badge> : <Badge>Disponible</Badge>}
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-2">
-                    <div className="flex items-center text-sm">
-                      <CalendarIcon className="mr-2 h-4 w-4" />
-                      {event.date.toLocaleDateString("es-ES", { day: "numeric", month: "long", year: "numeric" })}
+        <AnimatePresence mode="wait">
+          {selectedDateEvents.length > 0 ? (
+            <motion.div
+              key={date?.toDateString() || "no-date"} // Key para que AnimatePresence detecte cambios
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.3 }}
+              className="space-y-5"
+            >
+              {selectedDateEvents.map((event) => (
+                <Card
+                  key={event.id}
+                  className="group relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:scale-[1.01]"
+                >
+                  <CardHeader className="p-4 pb-2 bg-gradient-to-r from-card to-background relative">
+                    <div className="flex justify-between items-center mb-2">
+                      <CardTitle className="text-lg font-bold text-foreground line-clamp-1">
+                        {event.title}
+                      </CardTitle>
+                      {event.sold_out ? (
+                        <Badge variant="destructive" className="px-3 py-1 text-xs font-semibold rounded-full shadow-sm">Agotado</Badge>
+                      ) : (
+                        <Badge className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 text-xs font-semibold rounded-full shadow-sm">Disponible</Badge>
+                      )}
                     </div>
-                    <div className="flex items-center text-sm">
-                      <Clock className="mr-2 h-4 w-4" />
-                      {event.time}
+                    <div className="flex flex-wrap items-center text-sm text-muted-foreground gap-x-4 gap-y-1">
+                      <div className="flex items-center">
+                        <Clock className="mr-1.5 h-3.5 w-3.5 text-primary" />
+                        <span>{event.time}</span>
+                      </div>
+                      <div className="flex items-center">
+                        <MapPin className="mr-1.5 h-3.5 w-3.5 text-primary" />
+                        <span>{event.location}</span>
+                      </div>
                     </div>
-                    <div className="flex items-center text-sm">
-                      <MapPin className="mr-2 h-4 w-4" />
-                      {event.location}
-                    </div>
+                  </CardHeader>
+                  <CardContent className="p-4 pt-2">
                     {!event.sold_out && event.tickets_url && (
-                      <Button className="mt-2 w-full" asChild>
+                      <Button
+                        className="mt-4 w-full text-base font-semibold py-2 transition-all duration-300 ease-in-out
+                                   bg-primary hover:bg-primary/90 text-primary-foreground
+                                   shadow-lg hover:shadow-xl group-hover:scale-[1.02] group-hover:bg-primary/95"
+                        asChild
+                      >
                         <a href={event.tickets_url} target="_blank" rel="noopener noreferrer">
-                          Comprar Entradas
+                          Comprar Entradas <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                         </a>
                       </Button>
                     )}
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        ) : (
-          <div className="text-center p-8 border rounded-lg bg-muted/50">
-            <p>No hay eventos programados para esta fecha.</p>
-          </div>
-        )}
+                    {event.sold_out && (
+                      <Button
+                        className="mt-4 w-full text-base font-semibold py-2 cursor-not-allowed
+                                   bg-gray-200 text-gray-700 dark:bg-gray-700 dark:text-gray-300"
+                        disabled
+                      >
+                        Entradas Agotadas
+                      </Button>
+                    )}
+                  </CardContent>
+                </Card>
+              ))}
+            </motion.div>
+          ) : (
+            <motion.div
+              key={date?.toDateString() + "-no-events" || "no-date-no-events"} // Key único para este estado
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.3 }}
+              className="text-center p-10 border-2 border-dashed border-muted-foreground/30 rounded-xl bg-muted/20 text-muted-foreground flex flex-col items-center justify-center min-h-[200px]"
+            >
+              <CalendarIcon className="h-12 w-12 mb-4 text-muted-foreground/60" />
+              <p className="text-lg font-medium">No hay eventos para esta fecha.</p>
+              <p className="text-sm mt-2">Selecciona otro día en el calendario.</p>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   )

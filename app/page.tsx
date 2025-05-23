@@ -32,12 +32,10 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            <Button asChild size="lg" className="bg-pink-400 hover:bg-pink-500 text-white">
-              <Link href="/contacto">Contactame</Link>
-            </Button>
           </motion.div>
         </div>
       </motion.section>
+              <img src="/BannerShows.png" alt="Facureino" className="w-2/4 mx-auto mb-4 rounded-full" />
 
       {/* Gallery Section */}
       <motion.section
@@ -66,6 +64,9 @@ export default function Home() {
         transition={{ duration: 0.8, ease: "easeOut" }}
         viewport={{ once: true }}
       >
+        <div className="flex justify-center">
+          <div className="h-20"></div>
+        </div>
         <CalendarSection />
       </motion.section>
     </div>
