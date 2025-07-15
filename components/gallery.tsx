@@ -103,7 +103,7 @@ export default function Gallery() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      className="container mx-auto py-16 px-4 relative"
+      className="container mx-auto py-8 md:py-16 px-4 relative"
     >
       {/* Efectos de luces de comedy club */}
       <div className="absolute inset-0 opacity-20 pointer-events-none">
@@ -149,10 +149,10 @@ export default function Gallery() {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-center mb-16"
+          className="text-center mb-8 md:mb-16"
         >
-          <h2 className="text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-red-400 via-yellow-300 to-red-400 leading-tight mb-6 drop-shadow-2xl">
-            <Star className="inline-block mr-4 h-12 w-12 md:h-16 md:w-16 text-yellow-400 animate-spin" />
+          <h2 className="text-4xl md:text-5xl lg:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-red-400 via-yellow-300 to-red-400 leading-tight mb-4 md:mb-6 drop-shadow-2xl">
+            <Star className="inline-block mr-3 md:mr-4 h-8 w-8 md:h-12 md:w-12 lg:h-16 lg:w-16 text-yellow-400 animate-spin" />
             Fotos de mis shows
           </h2>
         </motion.div>

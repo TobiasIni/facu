@@ -110,7 +110,7 @@ export default function CalendarSection() {
   }
 
   return (
-    <div className="flex flex-col lg:flex-row gap-12 p-6 md:p-10 bg-gradient-to-br from-slate-900 via-black to-slate-900 rounded-2xl shadow-2xl relative overflow-hidden">
+    <div className="flex flex-col lg:flex-row gap-6 lg:gap-12 p-4 md:p-6 lg:p-10 bg-gradient-to-br from-slate-900 via-black to-slate-900 rounded-2xl shadow-2xl relative overflow-hidden">
       {/* Efectos de luces de comedy club */}
       <div className="absolute inset-0 opacity-20">
         <div className="absolute top-10 left-10 w-40 h-40 bg-red-500/30 rounded-full blur-3xl animate-pulse"></div>
@@ -122,7 +122,7 @@ export default function CalendarSection() {
         initial={{ opacity: 0, x: -50 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5 }}
-        className="flex-1 min-w-[300px] relative z-10"
+        className="flex-1 min-w-[280px] lg:min-w-[300px] relative z-10"
       >
         <Card className="overflow-hidden shadow-2xl rounded-xl bg-gradient-to-br from-slate-800 via-slate-900 to-black border-2 border-red-500/30">
           <CardHeader className="bg-gradient-to-r from-red-600 via-red-700 to-red-800 text-white p-6 relative overflow-hidden">
@@ -133,7 +133,7 @@ export default function CalendarSection() {
               PRÓXIMOS SHOWS
             </CardTitle>
           </CardHeader>
-          <CardContent className="p-4 bg-slate-900">
+          <CardContent className="p-2 md:p-4 bg-slate-900">
             <Calendar
               mode="single"
               selected={date}
@@ -163,47 +163,14 @@ export default function CalendarSection() {
               modifiers={{
                 day_with_event: isDayWithEvent,
               }}
-              components={{
-                Caption: ({ displayMonth }) => (
-                  <div className="flex justify-center pt-1 relative items-center bg-gradient-to-r from-slate-800 to-slate-700 rounded-lg p-3 mb-4 border border-red-500/20">
-                    <Button
-                      variant="ghost"
-                      onClick={() => {
-                        const newMonth = new Date(currentMonth)
-                        newMonth.setMonth(newMonth.getMonth() - 1)
-                        setCurrentMonth(newMonth)
-                      }}
-                      className="absolute left-2 h-8 w-8 p-0 opacity-70 hover:opacity-100 bg-red-600/20 hover:bg-red-600/40 text-yellow-400 rounded-full"
-                    >
-                      &lt;
-                    </Button>
-                    <h2 className="text-xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-red-400 text-center">
-                      {displayMonth.toLocaleDateString("es-ES", {
-                        month: "long",
-                        year: "numeric",
-                      }).toUpperCase()}
-                    </h2>
-                    <Button
-                      variant="ghost"
-                      onClick={() => {
-                        const newMonth = new Date(currentMonth)
-                        newMonth.setMonth(newMonth.getMonth() + 1)
-                        setCurrentMonth(newMonth)
-                      }}
-                      className="absolute right-2 h-8 w-8 p-0 opacity-70 hover:opacity-100 bg-red-600/20 hover:bg-red-600/40 text-yellow-400 rounded-full"
-                    >
-                      &gt;
-                    </Button>
-                  </div>
-                ),
-              }}
+
             />
           </CardContent>
         </Card>
       </motion.div>
 
       {/* Lista de Eventos - Comedy Show Style */}
-      <div className="flex-1 min-w-[300px] relative z-10">
+      <div className="flex-1 min-w-[280px] lg:min-w-[300px] relative z-10">
         {/* Decoración de micrófono flotante */}
         <motion.div
           className="absolute -top-8 -right-8 text-red-500/20"
@@ -220,11 +187,11 @@ export default function CalendarSection() {
           <Star className="w-12 h-12" />
         </motion.div>
         
-        <div className="bg-gradient-to-br from-slate-800 via-slate-900 to-black rounded-xl p-6 border-2 border-yellow-400/30 relative overflow-hidden">
+        <div className="bg-gradient-to-br from-slate-800 via-slate-900 to-black rounded-xl p-4 md:p-6 border-2 border-yellow-400/30 relative overflow-hidden">
           {/* Efecto de neón en el fondo */}
           <div className="absolute inset-0 bg-gradient-to-r from-red-500/5 to-yellow-500/5"></div>
           
-          <h3 className="text-2xl md:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-red-400 mb-6 relative z-10">
+          <h3 className="text-xl md:text-2xl lg:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-red-400 mb-4 md:mb-6 relative z-10">
             <Zap className="inline-block mr-3 h-8 w-8 text-yellow-400 animate-pulse" />
             {date ? (
               <>
@@ -258,7 +225,7 @@ export default function CalendarSection() {
                   {/* Efecto de spotlight en la tarjeta */}
                   <div className="absolute inset-0 bg-gradient-radial from-yellow-400/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                   
-                  <CardHeader className="p-6 pb-4 bg-gradient-to-r from-red-700/20 via-slate-800 to-red-700/20 relative overflow-hidden">
+                  <CardHeader className="p-4 md:p-6 pb-3 md:pb-4 bg-gradient-to-r from-red-700/20 via-slate-800 to-red-700/20 relative overflow-hidden">
                     {/* Efecto de neón en el header */}
                     <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/5 to-red-400/5 group-hover:from-yellow-400/10 group-hover:to-red-400/10 transition-all duration-500"></div>
                     
@@ -287,7 +254,7 @@ export default function CalendarSection() {
                       </div>
                     </div>
                   </CardHeader>
-                  <CardContent className="p-6 pt-4 bg-slate-900/50 relative">
+                  <CardContent className="p-4 md:p-6 pt-3 md:pt-4 bg-slate-900/50 relative">
                     {!event.sold_out && event.tickets_url && (
                       <Button
                         className="mt-6 w-full text-lg font-black py-4 transition-all duration-500 ease-in-out transform hover:scale-105 active:scale-95

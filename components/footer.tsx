@@ -71,47 +71,47 @@ export default function Footer() {
           </motion.p>
         </motion.div>
 
-                 {/* Social Media con efectos dramáticos */}
-         <motion.div 
-           className="flex items-center space-x-8 relative z-70"
-           initial={{ opacity: 0, x: 20 }}
-           whileInView={{ opacity: 1, x: 0 }}
-           transition={{ duration: 0.6, delay: 0.2 }}
-           viewport={{ once: true }}
-         >
-                     <motion.div whileHover={{ scale: 1.3, rotate: 5 }} whileTap={{ scale: 0.9 }}>
-             <Link
-               href="https://www.instagram.com/facureino/"
-               target="_blank"
-               rel="noopener noreferrer"
-               className="group relative p-3 rounded-full bg-gradient-to-r from-pink-600/30 to-purple-600/30 border border-pink-500/50 hover:border-pink-400 transition-all duration-300 z-80"
-             >
-              <Instagram className="h-6 w-6 text-pink-400 group-hover:text-pink-300 transition-colors duration-300" />
-              <div className="absolute inset-0 bg-pink-500/20 rounded-full blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        {/* Social Media con efectos limpios */}
+        <motion.div 
+          className="flex items-center space-x-6 relative z-70"
+          initial={{ opacity: 0, x: 20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          viewport={{ once: true }}
+        >
+          <motion.div whileHover={{ scale: 1.2, rotate: 5 }} whileTap={{ scale: 0.9 }}>
+            <Link
+              href="https://www.instagram.com/facureino/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative p-3 rounded-full bg-black/60 border border-pink-500/40 hover:border-pink-400/80 transition-all duration-300 hover:shadow-lg hover:shadow-pink-500/25 z-80"
+            >
+              <Instagram className="h-6 w-6 text-pink-400 group-hover:text-pink-300 transition-colors duration-300 relative z-10" />
+              <div className="absolute inset-0 bg-gradient-to-r from-pink-500/0 to-pink-500/0 group-hover:from-pink-500/20 group-hover:to-purple-500/20 rounded-full transition-all duration-300"></div>
             </Link>
           </motion.div>
 
-                     <motion.div whileHover={{ scale: 1.3, rotate: -5 }} whileTap={{ scale: 0.9 }}>
-             <Link
-               href="https://x.com/facureinooo"
-               target="_blank"
-               rel="noopener noreferrer"
-               className="group relative p-3 rounded-full bg-gradient-to-r from-blue-600/30 to-cyan-600/30 border border-blue-500/50 hover:border-blue-400 transition-all duration-300 z-80"
-             >
-              <Twitter className="h-6 w-6 text-blue-400 group-hover:text-blue-300 transition-colors duration-300" />
-              <div className="absolute inset-0 bg-blue-500/20 rounded-full blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <motion.div whileHover={{ scale: 1.2, rotate: -5 }} whileTap={{ scale: 0.9 }}>
+            <Link
+              href="https://x.com/facureinooo"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative p-3 rounded-full bg-black/60 border border-blue-500/40 hover:border-blue-400/80 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/25 z-80"
+            >
+              <Twitter className="h-6 w-6 text-blue-400 group-hover:text-blue-300 transition-colors duration-300 relative z-10" />
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/0 to-blue-500/0 group-hover:from-blue-500/20 group-hover:to-cyan-500/20 rounded-full transition-all duration-300"></div>
             </Link>
           </motion.div>
 
-                     <motion.div whileHover={{ scale: 1.3, rotate: 5 }} whileTap={{ scale: 0.9 }}>
-             <Link
-               href="https://youtube.com"
-               target="_blank"
-               rel="noopener noreferrer"
-               className="group relative p-3 rounded-full bg-gradient-to-r from-red-600/30 to-red-700/30 border border-red-500/50 hover:border-red-400 transition-all duration-300 z-80"
-             >
-              <Youtube className="h-6 w-6 text-red-400 group-hover:text-red-300 transition-colors duration-300" />
-              <div className="absolute inset-0 bg-red-500/20 rounded-full blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <motion.div whileHover={{ scale: 1.2, rotate: 5 }} whileTap={{ scale: 0.9 }}>
+            <Link
+              href="https://youtube.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative p-3 rounded-full bg-black/60 border border-red-500/40 hover:border-red-400/80 transition-all duration-300 hover:shadow-lg hover:shadow-red-500/25 z-80"
+            >
+              <Youtube className="h-6 w-6 text-red-400 group-hover:text-red-300 transition-colors duration-300 relative z-10" />
+              <div className="absolute inset-0 bg-gradient-to-r from-red-500/0 to-red-500/0 group-hover:from-red-500/20 group-hover:to-red-600/20 rounded-full transition-all duration-300"></div>
             </Link>
           </motion.div>
         </motion.div>

@@ -121,8 +121,8 @@ export default function Navbar() {
           </motion.div>
         </nav>
 
-        {/* Desktop Social Links - Neon Style */}
-        <div className="hidden md:flex items-center space-x-3 mr-4">
+        {/* Desktop Social Links - Clean Neon Style */}
+        <div className="hidden md:flex items-center space-x-4 mr-4">
           <motion.div
             whileHover={{ scale: 1.1, rotate: 5 }}
             whileTap={{ scale: 0.9 }}
@@ -132,10 +132,10 @@ export default function Navbar() {
               href="https://www.instagram.com/facureino/"
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative p-3 rounded-full bg-gradient-to-r from-pink-600/30 to-purple-600/30 border-2 border-pink-500/50 hover:border-pink-400 transition-all duration-300 hover:bg-gradient-to-r hover:from-pink-600/50 hover:to-purple-600/50"
+              className="group relative p-2.5 rounded-full bg-black/50 border border-pink-500/40 hover:border-pink-400/80 transition-all duration-300 hover:shadow-lg hover:shadow-pink-500/25"
             >
-              <Instagram className="h-6 w-6 text-pink-300 group-hover:text-pink-100 transition-colors duration-300" />
-              <div className="absolute inset-0 bg-pink-500/30 rounded-full blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <Instagram className="h-5 w-5 text-pink-400 group-hover:text-pink-300 transition-colors duration-300 relative z-10" />
+              <div className="absolute inset-0 bg-gradient-to-r from-pink-500/0 to-pink-500/0 group-hover:from-pink-500/20 group-hover:to-purple-500/20 rounded-full transition-all duration-300"></div>
             </Link>
           </motion.div>
           
@@ -148,10 +148,10 @@ export default function Navbar() {
               href="https://x.com/facureinooo"
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative p-3 rounded-full bg-gradient-to-r from-blue-600/30 to-cyan-600/30 border-2 border-blue-500/50 hover:border-blue-400 transition-all duration-300 hover:bg-gradient-to-r hover:from-blue-600/50 hover:to-cyan-600/50"
+              className="group relative p-2.5 rounded-full bg-black/50 border border-blue-500/40 hover:border-blue-400/80 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/25"
             >
-              <Twitter className="h-6 w-6 text-blue-300 group-hover:text-blue-100 transition-colors duration-300" />
-              <div className="absolute inset-0 bg-blue-500/30 rounded-full blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <Twitter className="h-5 w-5 text-blue-400 group-hover:text-blue-300 transition-colors duration-300 relative z-10" />
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/0 to-blue-500/0 group-hover:from-blue-500/20 group-hover:to-cyan-500/20 rounded-full transition-all duration-300"></div>
             </Link>
           </motion.div>
           
@@ -164,10 +164,10 @@ export default function Navbar() {
               href="https://youtube.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative p-3 rounded-full bg-gradient-to-r from-red-600/30 to-red-700/30 border-2 border-red-500/50 hover:border-red-400 transition-all duration-300 hover:bg-gradient-to-r hover:from-red-600/50 hover:to-red-700/50"
+              className="group relative p-2.5 rounded-full bg-black/50 border border-red-500/40 hover:border-red-400/80 transition-all duration-300 hover:shadow-lg hover:shadow-red-500/25"
             >
-              <Youtube className="h-6 w-6 text-red-300 group-hover:text-red-100 transition-colors duration-300" />
-              <div className="absolute inset-0 bg-red-500/30 rounded-full blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <Youtube className="h-5 w-5 text-red-400 group-hover:text-red-300 transition-colors duration-300 relative z-10" />
+              <div className="absolute inset-0 bg-gradient-to-r from-red-500/0 to-red-500/0 group-hover:from-red-500/20 group-hover:to-red-600/20 rounded-full transition-all duration-300"></div>
             </Link>
           </motion.div>
         </div>
@@ -271,48 +271,48 @@ export default function Navbar() {
                   {pathname === "/contacto" && <motion.div className="ml-auto w-2 h-2 bg-yellow-400 rounded-full animate-pulse" />}
                 </Link>
               </motion.div>
-                              <motion.div
-                  initial={{ y: 20, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.4 }}
-                  className="flex items-center justify-center space-x-6 pt-6 border-t-2 border-red-500/30"
-                >
-                  <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
-                    <Link
-                      href="https://www.instagram.com/facureino/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="group relative p-4 rounded-full bg-gradient-to-r from-pink-600/30 to-purple-600/30 border-2 border-pink-500/50 hover:border-pink-400 transition-all duration-300 hover:bg-gradient-to-r hover:from-pink-600/50 hover:to-purple-600/50"
-                    >
-                      <Instagram className="h-7 w-7 text-pink-300 group-hover:text-pink-100 transition-colors duration-300" />
-                      <div className="absolute inset-0 bg-pink-500/30 rounded-full blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    </Link>
-                  </motion.div>
-                  
-                  <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
-                    <Link
-                      href="https://x.com/facureinooo"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="group relative p-4 rounded-full bg-gradient-to-r from-blue-600/30 to-cyan-600/30 border-2 border-blue-500/50 hover:border-blue-400 transition-all duration-300 hover:bg-gradient-to-r hover:from-blue-600/50 hover:to-cyan-600/50"
-                    >
-                      <Twitter className="h-7 w-7 text-blue-300 group-hover:text-blue-100 transition-colors duration-300" />
-                      <div className="absolute inset-0 bg-blue-500/30 rounded-full blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    </Link>
-                  </motion.div>
-                  
-                  <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
-                    <Link
-                      href="https://youtube.com"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="group relative p-4 rounded-full bg-gradient-to-r from-red-600/30 to-red-700/30 border-2 border-red-500/50 hover:border-red-400 transition-all duration-300 hover:bg-gradient-to-r hover:from-red-600/50 hover:to-red-700/50"
-                    >
-                      <Youtube className="h-7 w-7 text-red-300 group-hover:text-red-100 transition-colors duration-300" />
-                      <div className="absolute inset-0 bg-red-500/30 rounded-full blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    </Link>
-                  </motion.div>
+              <motion.div
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.4 }}
+                className="flex items-center justify-center space-x-8 pt-6 border-t-2 border-red-500/30"
+              >
+                <motion.div whileHover={{ scale: 1.1, rotate: 5 }} whileTap={{ scale: 0.9 }}>
+                  <Link
+                    href="https://www.instagram.com/facureino/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group relative p-3 rounded-full bg-black/50 border border-pink-500/40 hover:border-pink-400/80 transition-all duration-300 hover:shadow-lg hover:shadow-pink-500/25"
+                  >
+                    <Instagram className="h-6 w-6 text-pink-400 group-hover:text-pink-300 transition-colors duration-300 relative z-10" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-pink-500/0 to-pink-500/0 group-hover:from-pink-500/20 group-hover:to-purple-500/20 rounded-full transition-all duration-300"></div>
+                  </Link>
                 </motion.div>
+                
+                <motion.div whileHover={{ scale: 1.1, rotate: -5 }} whileTap={{ scale: 0.9 }}>
+                  <Link
+                    href="https://x.com/facureinooo"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group relative p-3 rounded-full bg-black/50 border border-blue-500/40 hover:border-blue-400/80 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/25"
+                  >
+                    <Twitter className="h-6 w-6 text-blue-400 group-hover:text-blue-300 transition-colors duration-300 relative z-10" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-blue-500/0 to-blue-500/0 group-hover:from-blue-500/20 group-hover:to-cyan-500/20 rounded-full transition-all duration-300"></div>
+                  </Link>
+                </motion.div>
+                
+                <motion.div whileHover={{ scale: 1.1, rotate: 5 }} whileTap={{ scale: 0.9 }}>
+                  <Link
+                    href="https://youtube.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group relative p-3 rounded-full bg-black/50 border border-red-500/40 hover:border-red-400/80 transition-all duration-300 hover:shadow-lg hover:shadow-red-500/25"
+                  >
+                    <Youtube className="h-6 w-6 text-red-400 group-hover:text-red-300 transition-colors duration-300 relative z-10" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-red-500/0 to-red-500/0 group-hover:from-red-500/20 group-hover:to-red-600/20 rounded-full transition-all duration-300"></div>
+                  </Link>
+                </motion.div>
+              </motion.div>
             </nav>
           </motion.div>
         )}

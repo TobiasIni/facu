@@ -137,7 +137,7 @@ export default function Home() {
       {/* Gallery Section - Behind the Scenes */}
       <motion.section
         id="gallery-section"
-        className="py-16 md:py-24 relative z-30"
+        className="py-4 md:py-16 relative z-30"
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
@@ -145,7 +145,7 @@ export default function Home() {
       >
         <div className="container mx-auto px-4 relative z-10">
           <motion.div
-            className="text-center mb-12"
+            className="text-center mb-4 md:mb-12"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
@@ -158,7 +158,7 @@ export default function Home() {
       {/* Video Gallery Section - Live Shows */}
       <motion.section
         id="video-gallery-section"
-        className="py-16 md:py-24 relative overflow-hidden z-30"
+        className="py-4 md:py-16 relative overflow-hidden z-30"
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
@@ -166,7 +166,7 @@ export default function Home() {
       >
         <div className="container mx-auto px-4 relative z-10">
           <motion.div
-            className="text-center mb-12"
+            className="text-center mb-4 md:mb-12"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
@@ -183,7 +183,7 @@ export default function Home() {
       {/* Calendar Section - Show Dates */}
       <motion.section
         id="calendar-section"
-        className="py-16 md:py-24 relative z-30"
+        className="py-8 md:py-24 relative z-30"
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
@@ -191,7 +191,7 @@ export default function Home() {
       >
         <div className="container mx-auto px-4 relative z-10">
           <motion.div
-            className="text-center mb-12"
+            className="text-center mb-6 md:mb-12"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
