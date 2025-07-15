@@ -6,7 +6,7 @@ import { createClient } from "@/utils/supabase/client"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { PlusCircle, Calendar, FileText, Users, LogOut, Settings } from "lucide-react"
+import { PlusCircle, Calendar, FileText, Users, LogOut, Settings, Video } from "lucide-react"
 import Link from "next/link"
 import {
   AlertDialog,
@@ -186,6 +186,10 @@ export default function AdminDashboard() {
             <FileText className="h-4 w-4" />
             Blog
           </TabsTrigger>
+          <TabsTrigger value="videos" className="flex items-center gap-2">
+            <Video className="h-4 w-4" />
+            Videos
+          </TabsTrigger>
           <TabsTrigger value="events" className="flex items-center gap-2">
             <Calendar className="h-4 w-4" />
             Eventos
@@ -260,6 +264,40 @@ export default function AdminDashboard() {
                   ))}
                 </div>
               )}
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="videos">
+          <Card>
+            <CardHeader>
+              <div className="flex justify-between items-center">
+                <div>
+                  <CardTitle>Gestión de Videos TikTok</CardTitle>
+                  <CardDescription>Administra los videos que aparecen en tu galería (máximo 3)</CardDescription>
+                </div>
+                <Button asChild className="flex items-center gap-2">
+                  <Link href="/admin/dashboard/videos">
+                    <Video className="h-4 w-4" />
+                    Gestionar Videos
+                  </Link>
+                </Button>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="text-center p-8 border rounded-lg bg-muted/50">
+                <Video className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
+                <h3 className="text-lg font-medium mb-2">Gestiona tus videos de TikTok</h3>
+                <p className="text-muted-foreground mb-4">
+                  Agrega, edita o elimina los videos que aparecen en la galería de tu sitio web
+                </p>
+                <Button asChild>
+                  <Link href="/admin/dashboard/videos">
+                    <Video className="h-4 w-4 mr-2" />
+                    Ir a gestión de videos
+                  </Link>
+                </Button>
+              </div>
             </CardContent>
           </Card>
         </TabsContent>

@@ -30,10 +30,10 @@ export default function RootLayout({
   return (
     <html lang="es" suppressHydrationWarning>
       <body className={`${inter.className} bg-black text-white min-h-screen`}>
-        <ThemeProvider attribute="class" defaultTheme="dark" forcedTheme="dark">
+        <ThemeProvider attribute="class" defaultTheme="" forcedTheme="">
           <div className="flex min-h-screen flex-col bg-black">
             <Navbar />
-            <main className="flex-1 bg-black">{children}</main>
+            <main className="flex-1">{children}</main>
             <Footer />
           </div>
         </ThemeProvider>
