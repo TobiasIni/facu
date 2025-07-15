@@ -77,7 +77,7 @@ export default function VideoGallery() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      className="container mx-auto py-16 px-4 relative"
+      className="container mx-auto py-8 px-4 relative"
     >
       {/* Efectos de luces de comedy club */}
       <div className="absolute inset-0 opacity-20 pointer-events-none">
@@ -145,7 +145,7 @@ export default function VideoGallery() {
             <p className="text-white/60">Los videos más divertidos están en camino... 🎬</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 max-w-7xl mx-auto">
           {videos.map((video: Video, index: number) => (
           <motion.div
             key={video.id}
@@ -153,15 +153,16 @@ export default function VideoGallery() {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true, amount: 0.1 }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
+            className="max-w-sm mx-auto"
           >
-            <Card className="group relative overflow-hidden rounded-xl shadow-2xl border-2 border-red-500/30 hover:border-yellow-400/60 transform transition-all duration-500 hover:shadow-red-500/20 hover:-translate-y-3 hover:scale-105 bg-gradient-to-br from-slate-800 via-slate-900 to-black">
+            <Card className="group relative overflow-hidden rounded-xl shadow-2xl border-2 border-red-500/30 hover:border-yellow-400/60 transform transition-all duration-500 hover:shadow-red-500/20 hover:-translate-y-2 hover:scale-102 bg-gradient-to-br from-slate-800 via-slate-900 to-black">
               {/* Efecto de spotlight en la tarjeta */}
               <div className="absolute inset-0 bg-gradient-radial from-yellow-400/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10 pointer-events-none"></div>
               
               <CardHeader className="p-0 relative">
                 <div
                   className="relative w-full overflow-hidden cursor-pointer bg-gradient-to-br from-red-600/20 via-slate-900 to-yellow-600/20 transition-all duration-500 group-hover:from-red-500/30 group-hover:to-yellow-500/30"
-                  style={{ aspectRatio: "9/16" }}
+                  style={{ aspectRatio: "4/5", height: "320px" }}
                   onClick={() => setActiveVideoId(activeVideoId === video.video_id ? null : video.video_id)}
                 >
                   <AnimatePresence mode="wait">
@@ -196,9 +197,9 @@ export default function VideoGallery() {
                             initial={{ scale: 0.8, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
                             transition={{ delay: 0.1, type: "spring", stiffness: 200 }}
-                            className="relative w-24 h-24 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 backdrop-blur-sm rounded-full flex items-center justify-center transform group-hover:scale-125 transition-all duration-500 shadow-2xl border-2 border-yellow-400/50 group-hover:border-yellow-300"
+                            className="relative w-20 h-20 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 backdrop-blur-sm rounded-full flex items-center justify-center transform group-hover:scale-110 transition-all duration-500 shadow-2xl border-2 border-yellow-400/50 group-hover:border-yellow-300"
                           >
-                            <Play className="w-10 h-10 text-white fill-current translate-x-0.5" />
+                            <Play className="w-8 h-8 text-white fill-current translate-x-0.5" />
                           </motion.div>
                         </div>
                       </motion.div>
@@ -206,15 +207,15 @@ export default function VideoGallery() {
                   </AnimatePresence>
                 </div>
               </CardHeader>
-              <CardContent className="p-6 text-center bg-gradient-to-t from-slate-900 via-slate-800 to-slate-900 relative">
+              <CardContent className="p-4 text-center bg-gradient-to-t from-slate-900 via-slate-800 to-slate-900 relative">
                 {/* Efecto sutil de brillo */}
                 <div className="absolute inset-0 bg-gradient-to-r from-red-500/5 to-yellow-500/5 group-hover:from-red-500/10 group-hover:to-yellow-500/10 transition-all duration-500"></div>
                 
-                <CardTitle className="text-xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-red-400 mb-3 line-clamp-1 group-hover:from-yellow-300 group-hover:to-red-300 transition-all duration-300 relative z-10">
+                <CardTitle className="text-lg font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-red-400 mb-2 line-clamp-1 group-hover:from-yellow-300 group-hover:to-red-300 transition-all duration-300 relative z-10">
                   {video.title}
                 </CardTitle>
                 <CardDescription className="text-sm text-muted-foreground">
-                  Por <span className="font-semibold text-primary">@{video.author_handle}</span>
+                  Por <span className="font-semibold text-yellow-400">@{video.author_handle}</span>
                 </CardDescription>
                 
                 {/* Badge decorativo */}
