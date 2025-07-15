@@ -64,7 +64,7 @@ export default function AdminDashboard() {
   const loadStats = async () => {
     try {
       // Contar posts
-      const { count: postsCount } = await supabase.from("posts").select("*", { count: "exact", head: true })
+      const { count: postsCount } = await supabase.from("blog_posts").select("*", { count: "exact", head: true })
 
       // Contar eventos
       const { count: eventsCount } = await supabase.from("eventos").select("*", { count: "exact", head: true })
@@ -85,12 +85,12 @@ export default function AdminDashboard() {
   const loadPosts = async () => {
     try {
       const { data, error } = await supabase
-        .from("posts")
+        .from("blog_posts")
         .select("*")
         .order("created_at", { ascending: false })
 
       if (error) throw error
-      const typedData = data?.map(post => ({
+      const typedData = data?.map((post: any) => ({
         id: post.id as number,
         title: post.title as string,
         created_at: post.created_at as string
@@ -106,7 +106,7 @@ export default function AdminDashboard() {
 
     try {
       const { error } = await supabase
-        .from("posts")
+        .from("blog_posts")
         .delete()
         .eq("id", postToDelete)
 

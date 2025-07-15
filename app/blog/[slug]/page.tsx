@@ -20,7 +20,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
   const supabase = createServerClient()
 
   // Obtener el post específico por slug
-  const { data: post, error } = await supabase.from("posts").select("*").eq("slug", params.slug).single()
+  const { data: post, error } = await supabase.from("blog_posts").select("*").eq("slug", params.slug).single()
 
   if (error || !post) {
     notFound()

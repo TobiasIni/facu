@@ -175,7 +175,7 @@ export default function NuevoPostPage() {
       const contentWithImages = insertImagesIntoContent(formData.content, imageUrls)
 
       // 4. Guardar el post en la base de datos
-      const { error } = await supabase.from("posts").insert([
+      const { error } = await supabase.from("blog_posts").insert([
         {
           title: formData.title,
           slug: formData.slug,
@@ -183,7 +183,8 @@ export default function NuevoPostPage() {
           content: contentWithImages,
           featured_image: featuredImageUrl,
           author: formData.author,
-          created_at: new Date(formData.created_at).toISOString(),
+          published: true,
+          published_at: new Date(formData.created_at).toISOString(),
         },
       ])
 
